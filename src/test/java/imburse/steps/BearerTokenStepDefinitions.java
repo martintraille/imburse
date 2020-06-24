@@ -5,6 +5,7 @@ import io.cucumber.java.en.Given;
 import io.cucumber.java.en.Then;
 import io.cucumber.java.en.When;
 import io.restassured.RestAssured;
+import net.serenitybdd.core.Serenity;
 import net.serenitybdd.junit.runners.SerenityRunner;
 import net.serenitybdd.rest.SerenityRest;
 import net.thucydides.core.annotations.Steps;
@@ -68,9 +69,12 @@ public class BearerTokenStepDefinitions {
     @Then("he receives a bearer token")
     public void he_receives_a_bearer_token() {
 
+        Serenity.setSessionVariable("generatedAccessToken").to(picard.getAccessToken());
         bearerTokenResponse = picard.getResponseBody();
         Assert.assertTrue(bearerTokenResponse.contains("accessToken"));
         System.out.println("*****Bearer Token is:****" + bearerTokenResponse);
+
+
 
     }
 

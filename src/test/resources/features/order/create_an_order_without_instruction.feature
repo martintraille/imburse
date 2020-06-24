@@ -12,7 +12,7 @@ Feature: Create an order without instruction
 
 Scenario: create an order without instruction
   Given an order without an instruction
-  When a 'post' API call is made to the 'v1/order-management' endpoint
+  When a 'post' API call is made to the 'Create Order' endpoint
   Then the order is successfully created
 
 
