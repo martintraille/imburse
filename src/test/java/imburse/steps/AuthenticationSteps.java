@@ -1,21 +1,15 @@
 
 package imburse.steps;
 
-import net.serenitybdd.junit.runners.SerenityRunner;
 import net.serenitybdd.rest.SerenityRest;
-import net.serenitybdd.screenplay.rest.questions.ResponseConsequence;
 import net.thucydides.core.util.EnvironmentVariables;
 import org.apache.commons.codec.binary.Base64;
 import org.apache.commons.codec.digest.HmacAlgorithms;
 import org.apache.commons.codec.digest.HmacUtils;
-import org.junit.runner.RunWith;
 
 import java.io.UnsupportedEncodingException;
-import java.util.ArrayList;
 import java.util.Date;
-import java.util.List;
 
-import static java.lang.System.getProperty;
 import static net.serenitybdd.rest.SerenityRest.lastResponse;
 
 
@@ -47,23 +41,6 @@ public class AuthenticationSteps {
         return hmac;
     }
 
-    public String loadsBaseUrl() {
-        String url = environmentVariables.getProperty("url");
-        return url;
-    }
-
-    public String getAccountId() {
-        String accountid = environmentVariables.getProperty("accountid");
-        return accountid;
-
-    }
-
-
-    public String getTenantId() {
-        String tenantid = environmentVariables.getProperty("tenantid");
-        return tenantid;
-
-    }
 
     public String getResponseBody() {
         String response = lastResponse().getBody().asString();

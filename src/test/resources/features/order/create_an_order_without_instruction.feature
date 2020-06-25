@@ -10,8 +10,8 @@ Feature: Create an order without instruction
     When he attempts to authenticate via the '/v1/identity/hmac' endpoint
     Then he receives a bearer token
 
-Scenario: create an order without instruction
-  Given an order without an instruction
+Scenario: create an order without instruction via the /v1/order-management endpoint
+  Given an order with no instruction
   When a 'post' API call is made to the 'Create Order' endpoint
   Then the order is successfully created
 

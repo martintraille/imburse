@@ -1,27 +1,24 @@
 package imburse.steps;
 
 import imburse.model.request.order.Instruction;
-import imburse.model.request.order.Metadata;
 import imburse.model.request.order.Order;
 import io.cucumber.java.Before;
 import io.cucumber.java.en.Given;
 import io.cucumber.java.en.Then;
 import io.cucumber.java.en.When;
 import io.restassured.RestAssured;
-import net.serenitybdd.core.Serenity;
+import io.restassured.builder.RequestSpecBuilder;
+import io.restassured.specification.RequestSpecification;
 import net.serenitybdd.junit.runners.SerenityRunner;
-import net.serenitybdd.rest.Ensure;
-import net.serenitybdd.rest.SerenityRest;
 import net.thucydides.core.annotations.Steps;
-import org.junit.Assert;
 import org.junit.runner.RunWith;
+import utilities.TestData;
 
 import java.io.UnsupportedEncodingException;
 import java.util.UUID;
 
-import static net.serenitybdd.screenplay.rest.questions.ResponseConsequence.seeThatResponse;
-import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertTrue;
+import static utilities.TestData.DataKeys.*;
 
 @RunWith(SerenityRunner.class)
 public class OrderManagementStepDefinitions {
@@ -31,107 +28,77 @@ public class OrderManagementStepDefinitions {
     AuthenticationSteps registeredUser;
     @Steps(shared = true)
     AuthenticatedUserSteps james;
-
+    @Steps(shared = true)
+    private TestData testData;
 
     public String accessToken;
-    private Order newOrder;
-    private Instruction newInstruction;
     private String accountId;
     private String tenantId;
-    private String generatedOrderref;
     private String orderResponse;
+    public Order generatedOrder;
+    private String createInstructionResponse;
 
     @Before
-    public void setTheStage() {
-        RestAssured.baseURI = "https://sandbox-api.imbursepayments.com";
+    //public void setTheStage() {
+   //     RestAssured.baseURI = "https://sandbox-api.imbursepayments.com";
+   // }
+
+
+
+    @Given("an order with no instruction")
+    public void an_order_without_an_instruction() throws UnsupportedEncodingException {
+        generatedOrder = james.createNewOrderWithoutInstruction();
     }
 
-
-    @Given("an order without an instruction")
-    public void an_order_without_an_instruction() throws UnsupportedEncodingException {
-
-
-  /*      generatedOrderref = generateString();
-        Serenity.setSessionVariable("generatedOrderRef").to(generatedOrderref);
-
-        Metadata newMetadata = Metadata.MetadataBuilder.aMetadata()
-                .withKey1("TEST01")
-                .withKey2("TEST02")
-                .withKey3("TEST03").build();
-
-        newOrder = Order.OrderBuilder.anOrder()
-                .withOrderRef(generatedOrderref)
-                .withMetadata(newMetadata).build();*/
-
-
+    @Given("an order with an instruction")
+    public void an_order_with_an_instruction() {
+        // Write code here that turns the phrase above into concrete actions
+        throw new io.cucumber.java.PendingException();
     }
 
 
     @When("a {string} API call is made to the {string} endpoint")
     public void a_API_call_is_made_to_the_endpoint(String requestType, String endpoint) {
+        accountId = testData.getData(ACCOUNTID);
+        tenantId = testData.getData(TENANTID);
+        accessToken = testData.getData(ACCESS_TOKEN);
 
-       //accessToken = registeredUser.getAccessToken();
-       // Serenity.setSessionVariable("accountId").to(registeredUser.getAccountId());
-        accountId = registeredUser.getAccountId();
-       // Serenity.setSessionVariable("tenantId").to(registeredUser.getTenantId());
-        tenantId = registeredUser.getTenantId();
-        String accessToken = Serenity.sessionVariableCalled("generatedAccessToken");
-
-        james.callsAnEndpoint(endpoint, accessToken, accountId, tenantId);
-
-
+        james.callsAnEndpoint(endpoint, accessToken, accountId, tenantId, generatedOrder);
 
     }
-
 
     @Then("the order is successfully created")
     public void the_order_is_successfully_created() {
         assertTrue(registeredUser.getStatusCode().equals("HTTP/1.1 201 Created"));
         orderResponse = registeredUser.getResponseBody();
         assertTrue(orderResponse.isEmpty());
-
-
     }
 
-    @Given("an order is created with no Instruction")
+    @Given("an existing order is created with no instruction")
     public void an_order_is_created_with_no_Instruction() throws UnsupportedEncodingException {
         an_order_without_an_instruction();
         a_API_call_is_made_to_the_endpoint("post", "Create Order");
         the_order_is_successfully_created();
-
-
     }
 
-    @Then("the instruction is successfully created")
-    public void the_instruction_is_successfully_created() {
+    @Then("the instruction has been created successfully")
+    public void the_instruction_has_been_created_successfully() {
+        assertTrue(registeredUser.getStatusCode().equals("HTTP/1.1 201 Created"));
+        createInstructionResponse = registeredUser.getResponseBody();
+        assertTrue(createInstructionResponse.isEmpty());
+    }
+
+
+
+    @Then("the order is updated with the instruction")
+    public void the_order_is_updated_with_the_instruction() {
         // Write code here that turns the phrase above into concrete actions
         throw new io.cucumber.java.PendingException();
     }
-
-    @Then("the order is updated succesfully")
-    public void the_order_is_updated_succesfully() {
-        // Write code here that turns the phrase above into concrete actions
-        throw new io.cucumber.java.PendingException();
-    }
-
 
     public String generateString() {
         String uuid = UUID.randomUUID().toString();
         return "AUTO" + uuid;
     }
-
-    private String replaceString(String endpointToUpdate) {
-        String master = endpointToUpdate;
-        String target = "{orderRef}";
-        String replacement = Serenity.sessionVariableCalled(generatedOrderref);
-        String processed = master.replace(target, replacement);
-        assertTrue(processed.contains(replacement));
-        assertFalse(processed.contains(target));
-
-        return processed;
-
-
-    }
-
 
 }

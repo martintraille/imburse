@@ -7,8 +7,8 @@ public class CustomerReference {
         this.metadata = metadata;
     }
 
-    private String financialInstrumentId;
-    private String schemeId;
+    private String financialInstrumentId = " ";
+    private String schemeId = "";
     private Metadata metadata;
 
 

@@ -3,61 +3,84 @@ package imburse.steps;
 import imburse.model.request.order.Instruction;
 import imburse.model.request.order.Metadata;
 import imburse.model.request.order.Order;
+import io.cucumber.java.Before;
+import io.restassured.builder.RequestSpecBuilder;
+import io.restassured.builder.ResponseSpecBuilder;
+import io.restassured.specification.RequestSpecification;
+import io.restassured.specification.ResponseSpecification;
 import net.serenitybdd.core.Serenity;
 import net.serenitybdd.rest.SerenityRest;
 import net.thucydides.core.annotations.Step;
+import net.thucydides.core.annotations.Steps;
+import org.hamcrest.Matcher;
+import org.junit.BeforeClass;
+import utilities.TestData;
 
 import java.util.UUID;
 
-import static io.restassured.RestAssured.when;
+import static org.hamcrest.CoreMatchers.containsString;
+import static utilities.TestData.DataKeys.ACCESS_TOKEN;
 
 public class AuthenticatedUserSteps {
 
-
     private Instruction newInstruction;
     private Instruction instruction;
-    private Order order;
     private String generatedOrderref;
     private Order newOrder;
 
+
+    private static ResponseSpecification responseSpec;
+
+    @Before
+    public static void createResponseSpecification() {
+        responseSpec = new ResponseSpecBuilder()
+                .expectStatusCode(201)
+                .build();
+    }
+
+
+    @Steps(shared = true)
+    private TestData testData;
+
     @Step
-    public void callsAnEndpoint(String endpoint, String accessToken, String accountId, String tenantId) {
-       String api;
+    public void callsAnEndpoint(String endpoint, String accessToken, String accountId, String tenantId, Order order) {
+
+        String api;
 
         switch (endpoint) {
 
             case "Create Order":
-                order = createNewOrder();
-                 api  = "/v1/order-management/";
+                api = "/v1/order-management/";
                 SerenityRest.given().log().all()
-                        .header("Authorization", "Bearer " + accessToken)
+                        .header("Authorization", accessToken)
                         .header("x-account-id", accountId)
                         .header("x-tenant-id", tenantId)
                         .header("Content-Type", "application/json")
                         .body(order)
                         .when()
-                        .post(api).then().statusCode(201);
+                        .post(api).then().spec(responseSpec);
                 break;
+
 
             case "Create Instruction":
 
                 instruction = createNewInstruction();
-                 api = "/v1/order-management/" + generatedOrderref + "/instruction";
+                api = "/v1/order-management/" + generatedOrderref + "/instruction";
                 SerenityRest.given().log().all()
-                        .header("Authorization", "Bearer " + accessToken)
+                        .header("Authorization", testData.getData(ACCESS_TOKEN))
                         .header("x-account-id", accountId)
                         .header("x-tenant-id", tenantId)
                         .header("Content-Type", "application/json")
                         .body(instruction)
                         .when()
-                        .post(api).then().statusCode(201);
+                        .post(api).then().spec(responseSpec);
                 break;
 
 
         }
     }
 
-    public Order createNewOrder() {
+    public Order createNewOrderWithoutInstruction() {
         generatedOrderref = generateString();
         Serenity.setSessionVariable("generatedOrderRef").to(generatedOrderref);
 
@@ -71,9 +94,7 @@ public class AuthenticatedUserSteps {
                 .withMetadata(newMetadata).build();
 
         return newOrder;
-
     }
-
 
     private Instruction createNewInstruction() {
         Metadata newMetadata = Metadata.MetadataBuilder.aMetadata()
@@ -95,8 +116,6 @@ public class AuthenticatedUserSteps {
                 .build();
 
         return newInstruction;
-
-
     }
 
     public String generateString() {
