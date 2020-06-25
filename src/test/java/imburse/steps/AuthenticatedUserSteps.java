@@ -140,5 +140,25 @@ public class AuthenticatedUserSteps {
         return newOrder;
     }
 
+    public Order createNewOrderWithInstruction(String orderRef) {
+        generatedOrderref = orderRef;
+        List<Instruction> instructions = Arrays.asList(createNewInstruction());
+        Serenity.setSessionVariable("generatedOrderRef").to(generatedOrderref);
+
+        Metadata newMetadata = Metadata.MetadataBuilder.aMetadata()
+                .withKey1("TEST01")
+                .withKey2("TEST02")
+                .withKey3("TEST03").build();
+
+
+        newOrder = Order.OrderBuilder.anOrder()
+                .withOrderRef(generatedOrderref)
+                .withInstructions(instructions)
+                .withMetadata(newMetadata).build();
+
+        return newOrder;
+
+    }
+
 
 }

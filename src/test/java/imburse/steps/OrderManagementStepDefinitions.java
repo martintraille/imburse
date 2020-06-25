@@ -58,9 +58,9 @@ public class OrderManagementStepDefinitions {
 
 
     @Given("an order with an invalid {string}")
-    public void an_order_with_an_invalid(String string) {
-        // Write code here that turns the phrase above into concrete actions
-        throw new io.cucumber.java.PendingException();
+    public void an_order_with_an_invalid(String orderRef) {
+        generatedOrder = james.createNewOrderWithInstruction(orderRef);
+
     }
 
     @Then("the response will show {string}")
