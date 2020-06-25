@@ -6,11 +6,9 @@ import io.cucumber.java.Before;
 import io.cucumber.java.en.Given;
 import io.cucumber.java.en.Then;
 import io.cucumber.java.en.When;
-import io.restassured.RestAssured;
-import io.restassured.builder.RequestSpecBuilder;
-import io.restassured.specification.RequestSpecification;
 import net.serenitybdd.junit.runners.SerenityRunner;
 import net.thucydides.core.annotations.Steps;
+import net.thucydides.core.util.EnvironmentVariables;
 import org.junit.runner.RunWith;
 import utilities.TestData;
 
@@ -37,21 +35,36 @@ public class OrderManagementStepDefinitions {
     private String orderResponse;
     public Order generatedOrder;
     private String createInstructionResponse;
+    private Instruction generatedInstruction;
+    private EnvironmentVariables environmentVariables;
 
     @Before
-    //public void setTheStage() {
-   //     RestAssured.baseURI = "https://sandbox-api.imbursepayments.com";
-   // }
-
-
 
     @Given("an order with no instruction")
     public void an_order_without_an_instruction() throws UnsupportedEncodingException {
         generatedOrder = james.createNewOrderWithoutInstruction();
+        testData.setData(EXPECTED_STATUS_CODE, environmentVariables.getProperty("orderwithoutinstructionstatuscode"));
+        testData.setData(EXPECTED_STATUS_CODE_MESSAGE, environmentVariables.getProperty("orderwithoutinstructionsstatuscodemessage"));
+
     }
 
     @Given("an order with an instruction")
     public void an_order_with_an_instruction() {
+        generatedOrder = james.createNewOrderWithInstruction();
+        testData.setData(EXPECTED_STATUS_CODE, environmentVariables.getProperty("orderwithinstructionstatuscode"));
+        testData.setData(EXPECTED_STATUS_CODE_MESSAGE, environmentVariables.getProperty("orderwithinstructionsstatuscodemessage"));
+
+    }
+
+
+    @Given("an order with an invalid {string}")
+    public void an_order_with_an_invalid(String string) {
+        // Write code here that turns the phrase above into concrete actions
+        throw new io.cucumber.java.PendingException();
+    }
+
+    @Then("the response will show {string}")
+    public void the_response_will_show(String string) {
         // Write code here that turns the phrase above into concrete actions
         throw new io.cucumber.java.PendingException();
     }
@@ -69,7 +82,7 @@ public class OrderManagementStepDefinitions {
 
     @Then("the order is successfully created")
     public void the_order_is_successfully_created() {
-        assertTrue(registeredUser.getStatusCode().equals("HTTP/1.1 201 Created"));
+        assertTrue(registeredUser.getStatusCode().equals(testData.getData(EXPECTED_STATUS_CODE_MESSAGE)));
         orderResponse = registeredUser.getResponseBody();
         assertTrue(orderResponse.isEmpty());
     }
@@ -88,13 +101,6 @@ public class OrderManagementStepDefinitions {
         assertTrue(createInstructionResponse.isEmpty());
     }
 
-
-
-    @Then("the order is updated with the instruction")
-    public void the_order_is_updated_with_the_instruction() {
-        // Write code here that turns the phrase above into concrete actions
-        throw new io.cucumber.java.PendingException();
-    }
 
     public String generateString() {
         String uuid = UUID.randomUUID().toString();

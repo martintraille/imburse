@@ -4,32 +4,31 @@ import imburse.model.request.order.Instruction;
 import imburse.model.request.order.Metadata;
 import imburse.model.request.order.Order;
 import io.cucumber.java.Before;
-import io.restassured.builder.RequestSpecBuilder;
 import io.restassured.builder.ResponseSpecBuilder;
-import io.restassured.specification.RequestSpecification;
 import io.restassured.specification.ResponseSpecification;
 import net.serenitybdd.core.Serenity;
 import net.serenitybdd.rest.SerenityRest;
 import net.thucydides.core.annotations.Step;
 import net.thucydides.core.annotations.Steps;
-import org.hamcrest.Matcher;
-import org.junit.BeforeClass;
 import utilities.TestData;
 
+import java.util.Arrays;
+import java.util.List;
 import java.util.UUID;
 
-import static org.hamcrest.CoreMatchers.containsString;
 import static utilities.TestData.DataKeys.ACCESS_TOKEN;
+import static utilities.TestData.DataKeys.EXPECTED_STATUS_CODE;
 
 public class AuthenticatedUserSteps {
 
-    private Instruction newInstruction;
+    public Instruction newInstruction;
     private Instruction instruction;
     private String generatedOrderref;
     private Order newOrder;
 
 
     private static ResponseSpecification responseSpec;
+
 
     @Before
     public static void createResponseSpecification() {
@@ -58,12 +57,11 @@ public class AuthenticatedUserSteps {
                         .header("Content-Type", "application/json")
                         .body(order)
                         .when()
-                        .post(api).then().spec(responseSpec);
+                        .post(api).then().statusCode(Integer.parseInt(testData.getData(EXPECTED_STATUS_CODE).toString()));
                 break;
 
 
             case "Create Instruction":
-
                 instruction = createNewInstruction();
                 api = "/v1/order-management/" + generatedOrderref + "/instruction";
                 SerenityRest.given().log().all()
@@ -73,10 +71,8 @@ public class AuthenticatedUserSteps {
                         .header("Content-Type", "application/json")
                         .body(instruction)
                         .when()
-                        .post(api).then().spec(responseSpec);
+                        .post(api).then().statusCode(Integer.parseInt(testData.getData(EXPECTED_STATUS_CODE).toString()));
                 break;
-
-
         }
     }
 
@@ -96,13 +92,13 @@ public class AuthenticatedUserSteps {
         return newOrder;
     }
 
-    private Instruction createNewInstruction() {
+    public Instruction createNewInstruction() {
         Metadata newMetadata = Metadata.MetadataBuilder.aMetadata()
                 .withKey1("TEST01")
                 .withKey2("TEST02")
                 .withKey3("TEST03").build();
 
-        newInstruction = Instruction.InstructionBuilder.anInstruction()
+        Instruction newInstruction = Instruction.InstructionBuilder.anInstruction()
                 .withInstructionRef("A123124516")
                 .withCustomerRef("13212412")
                 .withDirection("CREDIT")
@@ -118,9 +114,31 @@ public class AuthenticatedUserSteps {
         return newInstruction;
     }
 
+
     public String generateString() {
         String uuid = UUID.randomUUID().toString();
         return "AUTO" + uuid;
     }
+
+    public Order createNewOrderWithInstruction() {
+        generatedOrderref = generateString();
+
+        List<Instruction> instructions = Arrays.asList(createNewInstruction());
+        Serenity.setSessionVariable("generatedOrderRef").to(generatedOrderref);
+
+        Metadata newMetadata = Metadata.MetadataBuilder.aMetadata()
+                .withKey1("TEST01")
+                .withKey2("TEST02")
+                .withKey3("TEST03").build();
+
+
+        newOrder = Order.OrderBuilder.anOrder()
+                .withOrderRef(generatedOrderref)
+                .withInstructions(instructions)
+                .withMetadata(newMetadata).build();
+
+        return newOrder;
+    }
+
 
 }

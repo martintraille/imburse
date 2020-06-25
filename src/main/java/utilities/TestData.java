@@ -35,7 +35,9 @@ public class TestData {
     public enum DataKeys {
         ACCOUNTID,
         TENANTID,
-        ACCESS_TOKEN
+        ACCESS_TOKEN,
+        EXPECTED_STATUS_CODE,
+        EXPECTED_STATUS_CODE_MESSAGE
     }
 
 }
