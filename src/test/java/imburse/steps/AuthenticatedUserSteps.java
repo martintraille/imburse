@@ -3,6 +3,7 @@ package imburse.steps;
 import imburse.model.request.order.Instruction;
 import imburse.model.request.order.Metadata;
 import imburse.model.request.order.Order;
+import imburse.utilities.Randomiser;
 import io.cucumber.java.Before;
 import io.restassured.builder.ResponseSpecBuilder;
 import io.restassured.specification.ResponseSpecification;
@@ -25,7 +26,7 @@ public class AuthenticatedUserSteps {
     private Instruction instruction;
     private String generatedOrderref;
     private Order newOrder;
-
+     private Randomiser randomiser;
 
     private static ResponseSpecification responseSpec;
 
@@ -57,7 +58,8 @@ public class AuthenticatedUserSteps {
                         .header("Content-Type", "application/json")
                         .body(order)
                         .when()
-                        .post(api).then().statusCode(Integer.parseInt(testData.getData(EXPECTED_STATUS_CODE).toString()));
+                        .post(api);
+                        //.then().statusCode(Integer.parseInt(testData.getData(EXPECTED_STATUS_CODE).toString()));
                 break;
 
 
@@ -141,7 +143,12 @@ public class AuthenticatedUserSteps {
     }
 
     public Order createNewOrderWithInstruction(String orderRef) {
-        generatedOrderref = orderRef;
+        if (orderRef.contentEquals("RaNdOmAlPhANuMeRiC._-")){
+            generatedOrderref = orderRef+Randomiser.customRandomAlphanumericString();
+        } else
+        { generatedOrderref = (orderRef);
+        }
+
         List<Instruction> instructions = Arrays.asList(createNewInstruction());
         Serenity.setSessionVariable("generatedOrderRef").to(generatedOrderref);
 
