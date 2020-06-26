@@ -2,13 +2,16 @@ package imburse.steps;
 
 import imburse.model.request.order.Instruction;
 import imburse.model.request.order.Order;
+import imburse.model.response.error.ErrorMessage;
 import io.cucumber.java.Before;
 import io.cucumber.java.en.Given;
 import io.cucumber.java.en.Then;
 import io.cucumber.java.en.When;
 import net.serenitybdd.junit.runners.SerenityRunner;
+import net.serenitybdd.rest.SerenityRest;
 import net.thucydides.core.annotations.Steps;
 import net.thucydides.core.util.EnvironmentVariables;
+import org.junit.Assert;
 import org.junit.runner.RunWith;
 import utilities.TestData;
 
@@ -57,16 +60,37 @@ public class OrderManagementStepDefinitions {
     }
 
 
-    @Given("an order with an invalid {string}")
+   /* @Given("an order with an invalid {string}")
     public void an_order_with_an_invalid(String orderRef) {
         generatedOrder = james.createNewOrderWithInstruction(orderRef);
+        testData.setData(EXPECTED_STATUS_CODE, environmentVariables.getProperty("failedorderstatuscode"));
+        testData.setData(EXPECTED_STATUS_CODE_MESSAGE, environmentVariables.getProperty("errorcodemessage") );
 
+    }*/
+
+    @Given("an order with an order reference {string}")
+    public void an_order_with_an_order_reference(String orderRef) {
+        generatedOrder = james.createNewOrderWithInstruction(orderRef);
     }
 
-    @Then("the response will show {string}")
-    public void the_response_will_show(String string) {
-        // Write code here that turns the phrase above into concrete actions
-        throw new io.cucumber.java.PendingException();
+    @Then("a {string} response message is returned")
+    public void a_success_message_is_generated(String responseMessage) {
+        Assert.assertEquals(responseMessage, SerenityRest.lastResponse().getStatusLine());
+        orderResponse = registeredUser.getResponseBody();
+        assertTrue(orderResponse.isEmpty());
+    }
+
+
+    @Then("a {int} response code is returned")
+    public void a_error_code_is_generated(int statusCode) {
+        Assert.assertEquals(statusCode, SerenityRest.lastResponse().getStatusCode());
+    }
+
+
+    @Then("the error response will show {string}")
+    public void the_response_will_show(String errorCode) {
+        ErrorMessage errorMessage = SerenityRest.lastResponse().as(ErrorMessage.class);
+        Assert.assertEquals(errorCode, errorMessage.getErrors().get(0).getErrorCode());
     }
 
 
@@ -79,6 +103,7 @@ public class OrderManagementStepDefinitions {
         james.callsAnEndpoint(endpoint, accessToken, accountId, tenantId, generatedOrder);
 
     }
+
 
     @Then("the order is successfully created")
     public void the_order_is_successfully_created() {
