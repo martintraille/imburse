@@ -45,6 +45,7 @@ public class BearerTokenStepDefinitions {
 
         testData.setData(ACCOUNTID, environmentVariables.getProperty("accountid"));
         testData.setData(TENANTID, environmentVariables.getProperty("tenantid"));
+        testData.setData(SCHEMEID, environmentVariables.getProperty("schemeid"));
     }
 
 

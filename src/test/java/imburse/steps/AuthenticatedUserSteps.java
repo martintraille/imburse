@@ -1,8 +1,6 @@
 package imburse.steps;
 
-import imburse.model.request.order.Instruction;
-import imburse.model.request.order.Metadata;
-import imburse.model.request.order.Order;
+import imburse.model.request.order.*;
 import imburse.utilities.Randomiser;
 import io.cucumber.java.Before;
 import io.restassured.builder.ResponseSpecBuilder;
@@ -11,11 +9,10 @@ import net.serenitybdd.core.Serenity;
 import net.serenitybdd.rest.SerenityRest;
 import net.thucydides.core.annotations.Step;
 import net.thucydides.core.annotations.Steps;
+import net.thucydides.core.util.EnvironmentVariables;
 import utilities.TestData;
 
-import java.util.Arrays;
-import java.util.List;
-import java.util.UUID;
+import java.util.*;
 
 import static utilities.TestData.DataKeys.*;
 
@@ -171,10 +168,28 @@ public class AuthenticatedUserSteps {
                 .withKey3("TEST03").build();
 
 
+       CustomerReferenceMetadata newCustomerReferenceMetadata = CustomerReferenceMetadata.CustomerReferenceMetadataBuilder.aCustomerReferenceMetadata()
+               .withKey1("NULL")
+               .withKey2("NULL")
+               .withKey3("NULL").build();
+
+       CustomerReference newCustomerReference = CustomerReference.CustomerReferenceBuilder.aCustomerReference()
+               .withFinancialInstrumentId("")
+               .withSchemeId(testData.getData(SCHEMEID))
+               .withCustomerReferenceMetadata(newCustomerReferenceMetadata)
+               .build();
+
+       CustomerDefaults newCustomerDefaults = CustomerDefaults.CustomerDefaultsBuilder.aCustomerDefaults()
+               .withCustref1(newCustomerReference)
+               .build();
+
+
+
         newOrder = Order.OrderBuilder.anOrder()
                 .withOrderRef(generatedOrderref)
                 .withInstructions(instructions)
-                .withMetadata(newMetadata).build();
+                .withMetadata(newMetadata)
+                .withCustomerDefaults(newCustomerDefaults).build();
 
         return newOrder;
 
@@ -196,7 +211,6 @@ public class AuthenticatedUserSteps {
                 .withKey1("TEST01")
                 .withKey2("TEST02")
                 .withKey3("TEST03").build();
-
 
         newOrder = Order.OrderBuilder.anOrder()
                 .withOrderRef(generatedOrderref)

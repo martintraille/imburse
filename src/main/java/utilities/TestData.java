@@ -36,6 +36,7 @@ public class TestData {
         ACCOUNTID,
         TENANTID,
         ACCESS_TOKEN,
+        SCHEMEID,
         EXPECTED_STATUS_CODE,
         EXPECTED_STATUS_CODE_MESSAGE,
         ORDER_REFERENCE
