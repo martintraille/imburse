@@ -23,10 +23,9 @@ Feature: Create an order with validation checks
       | Order reference cannot be longer than 50 chars | "tqT39fIK8oHlTavsxe5lxFOqlvU51CYXOgsNjv4FQGtqDtr6o_Q" | 400                  | "ORDER_REF_LENGTH_OUT_OF_RANGE" |
 
 
+
   Scenario: Order reference can contain (.dot) -(dash) _(underscore)
     Given an order with an order reference 'RaNdOmAlPhANuMeRiC._-'
     When a 'post' API call is made to the 'Create Order' endpoint
     Then a 202 response code is returned
     And a 'HTTP/1.1 202 Accepted' response message is returned
-
-
