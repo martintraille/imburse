@@ -12,21 +12,24 @@ Feature: Create an order with validation checks
     Then he receives a bearer token
 
 
-  Scenario Outline: create an order with an invalid order reference
+  Scenario Outline: Order reference is mandatory
     Given an order with an order reference <order reference>
     When a 'post' API call is made to the 'Create Order' endpoint
     Then a <response code number> response code is returned
     And the error response will show <error message>
     Examples:
-      | Scenario           | order reference | response code number | error message           |
-      | No order reference | ""              | 400                  | "ORDER_REF_IS_REQUIRED" |
+      | Scenario                     | order reference | response code number | error message           |
+      | Order reference is mandatory | ""              | 400                  | "ORDER_REF_IS_REQUIRED" |
 
-  Scenario: Acceptable characters in an order reference
+
+  Scenario: Order reference can contain (.dot) -(dash) _(underscore)
     Given an order with an order reference 'RaNdOmAlPhANuMeRiC._-'
     When a 'post' API call is made to the 'Create Order' endpoint
     Then a 202 response code is returned
     And a 'HTTP/1.1 202 Accepted' response message is returned
 
-
-
+  Scenario: Order reference cannot be longer than 50 characters
+    Given an order with a 51 character order reference
+    When a 'post' API call is made to the 'Create Order' endpoint
+    Then a '400' error code is returned
 
