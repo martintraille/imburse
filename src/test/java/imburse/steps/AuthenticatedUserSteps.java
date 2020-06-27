@@ -122,6 +122,7 @@ public class AuthenticatedUserSteps {
     }
 
     public Order createNewOrderWithInstruction() {
+
         generatedOrderref = generateString();
 
         List<Instruction> instructions = Arrays.asList(createNewInstruction());
@@ -147,9 +148,15 @@ public class AuthenticatedUserSteps {
 
             case "RaNdOmAlPhANuMeRiC._-":
 
-            case "UniqueOrderRefForDuplicationTest" :
+            case "DuplicateOrderRef" :
 
                 generatedOrderref = orderRef + Randomiser.customRandomAlphanumericString();
+                testData.setData(ORDER_REFERENCE, generatedOrderref);
+                break;
+
+            case "duplicate":
+
+                generatedOrderref = testData.getData(ORDER_REFERENCE);
                 break;
 
             default :generatedOrderref = (orderRef);
@@ -172,6 +179,9 @@ public class AuthenticatedUserSteps {
         return newOrder;
 
     }
+
+
+
 
 
     public Order createNewOrderWithInstruction(int noOfChars) {

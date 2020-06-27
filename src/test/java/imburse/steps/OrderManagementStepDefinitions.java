@@ -66,15 +66,6 @@ public class OrderManagementStepDefinitions {
     }
 
 
-
-   /* @Given("an order with an invalid {string}")
-    public void an_order_with_an_invalid(String orderRef) {
-        generatedOrder = james.createNewOrderWithInstruction(orderRef);
-        testData.setData(EXPECTED_STATUS_CODE, environmentVariables.getProperty("failedorderstatuscode"));
-        testData.setData(EXPECTED_STATUS_CODE_MESSAGE, environmentVariables.getProperty("errorcodemessage") );
-
-    }*/
-
     @Given("an order with an order reference {string}")
     public void an_order_with_an_order_reference(String orderRef) {
         generatedOrder = james.createNewOrderWithInstruction(orderRef);
@@ -109,6 +100,18 @@ public class OrderManagementStepDefinitions {
         james.callsAnEndpoint(endpoint, accessToken, accountId, tenantId, generatedOrder);
 
     }
+
+  /*  @When("we have an order with the same order reference {string}")
+    public void we_have_an_order_with_the_same_order_reference(String duplicateOrderRef) {
+        james.createNewOrderWithInstruction(duplicateOrderRef);
+    }*/
+
+    @When("we have an order with a {string} order reference")
+    public void we_have_an_order_with_a_order_reference(String duplicateMarker) {
+        james.createNewOrderWithInstruction(duplicateMarker);
+
+    }
+
 
 
     @Then("the order is successfully created")
