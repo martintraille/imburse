@@ -16,7 +16,7 @@ public class Instruction {
     private Metadata metadata;
 
     public Instruction(String instructionRef, String customerRef, String direction, String financialInstrumentId, String amount, String currency,
-                       String country, String settledByDate, String schemeId, Metadata metadata) {
+                       String country, String settledByDate, String schemeId) {
         this.instructionRef = instructionRef;
         this.customerRef = customerRef;
         this.direction = direction;
@@ -182,7 +182,7 @@ public class Instruction {
         }
 
         public Instruction build() {
-            return new Instruction(instructionRef, customerRef, direction, financialInstrumentId, amount, currency, country, settledByDate, schemeId, metadata);
+            return new Instruction(instructionRef, customerRef, direction, financialInstrumentId, amount, currency, country, settledByDate, schemeId);
         }
     }
 }
