@@ -17,8 +17,7 @@ import java.util.Arrays;
 import java.util.List;
 import java.util.UUID;
 
-import static utilities.TestData.DataKeys.ACCESS_TOKEN;
-import static utilities.TestData.DataKeys.EXPECTED_STATUS_CODE;
+import static utilities.TestData.DataKeys.*;
 
 public class AuthenticatedUserSteps {
 
@@ -143,10 +142,17 @@ public class AuthenticatedUserSteps {
     }
 
     public Order createNewOrderWithInstruction(String orderRef) {
-        if (orderRef.contentEquals("RaNdOmAlPhANuMeRiC._-")){
-            generatedOrderref = orderRef+Randomiser.customRandomAlphanumericString();
-        } else
-        { generatedOrderref = (orderRef);
+
+        switch (orderRef) {
+
+            case "RaNdOmAlPhANuMeRiC._-":
+
+            case "UniqueOrderRefForDuplicationTest" :
+
+                generatedOrderref = orderRef + Randomiser.customRandomAlphanumericString();
+                break;
+
+            default :generatedOrderref = (orderRef);
         }
 
         List<Instruction> instructions = Arrays.asList(createNewInstruction());
@@ -166,6 +172,35 @@ public class AuthenticatedUserSteps {
         return newOrder;
 
     }
+
+
+    public Order createNewOrderWithInstruction(int noOfChars) {
+
+       generatedOrderref =  Randomiser.customRandomAlphanumericString(noOfChars);
+
+
+        List<Instruction> instructions = Arrays.asList(createNewInstruction());
+        Serenity.setSessionVariable("generatedOrderRef").to(generatedOrderref);
+
+        Metadata newMetadata = Metadata.MetadataBuilder.aMetadata()
+                .withKey1("TEST01")
+                .withKey2("TEST02")
+                .withKey3("TEST03").build();
+
+
+        newOrder = Order.OrderBuilder.anOrder()
+                .withOrderRef(generatedOrderref)
+                .withInstructions(instructions)
+                .withMetadata(newMetadata).build();
+
+        return newOrder;
+
+    }
+
+
+
+
+
 
 
 }
