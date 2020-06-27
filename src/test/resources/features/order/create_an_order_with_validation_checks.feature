@@ -1,4 +1,4 @@
-@WIP
+
 Feature: Create an order with validation checks
 
   As an API user
@@ -45,6 +45,11 @@ Feature: Create an order with validation checks
       Then a 400 response code is returned
       And the error response will show "ORDER_ALREADY_EXISTS"
 
-
+@WIP
+Scenario: Order metadata value over 100 characters
+  Given an order with a 101 character metadata value
+  When a 'post' API call is made to the 'Create Order' endpoint
+  Then a 400 response code is returned
+  And the error response will show "SOME ERROR"
 
 
