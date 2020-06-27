@@ -59,6 +59,12 @@ public class OrderManagementStepDefinitions {
 
     }
 
+    @Given("an order with a {int} character order reference")
+    public void an_order_with_a_character_order_reference(Integer numberOfChars) {
+
+    }
+
+
 
    /* @Given("an order with an invalid {string}")
     public void an_order_with_an_invalid(String orderRef) {
@@ -86,6 +92,10 @@ public class OrderManagementStepDefinitions {
         Assert.assertEquals(statusCode, SerenityRest.lastResponse().getStatusCode());
     }
 
+    @Then("a {int} response code is returned")
+    public void a_response_code_is_returned(int statusCode) {
+        Assert.assertEquals(statusCode, SerenityRest.lastResponse().getStatusCode());
+    }
 
     @Then("the error response will show {string}")
     public void the_response_will_show(String errorCode) {
