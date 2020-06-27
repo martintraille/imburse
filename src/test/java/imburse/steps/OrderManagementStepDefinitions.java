@@ -81,10 +81,11 @@ public class OrderManagementStepDefinitions {
     }
 
 
-    @Then("a {int} (response)|(error) code is returned")
+    @Then("a {int} response code is returned")
     public void a_error_code_is_generated(int statusCode) {
         Assert.assertEquals(statusCode, SerenityRest.lastResponse().getStatusCode());
     }
+
 
 
     @Then("the error response will show {string}")
