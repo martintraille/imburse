@@ -37,5 +37,14 @@ Feature: Create an order with validation checks
     And a 'HTTP/1.1 202 Accepted' response message is returned
 
     Scenario: Order reference must be unique and cannot be reused
-      Given an order with an order reference "UniqueOrderRefForDuplicationTest"
+      Given an order with an order reference "DuplicateOrderRef"
+      And a 'post' API call is made to the 'Create Order' endpoint
+      And a 202 response code is returned
+      When we have an order with a "duplicate" order reference
+      And a 'post' API call is made to the 'Create Order' endpoint
+      Then a 400 response code is returned
+      And the error response will show "ORDER_ALREADY_EXISTS"
+
+
+
 
