@@ -144,4 +144,69 @@ public class OrderEngineer {
         return newOrder;
 
     }
+
+    public Order generateOrderWith101MetadataValueCharacters() {
+        String metadataValue = Randomiser.customRandomAlphanumericString(101);
+        String generatedOrderref = Randomiser.customRandomAlphanumericString();
+        testData.setData(ORDER_REFERENCE, generatedOrderref);
+
+        Instruction generatedInstruction = instructionEngineer.generateValidInstruction();
+        Metadata generatedMetaData = metadataEngineer.generateMetadataWith101CharValue(metadataValue);
+        CustomerDefaults generatedCustomerDefaults = customerDefaultsEngineer.generateValidCustomerDefaults();
+
+
+        Order newOrder = Order.OrderBuilder.anOrder()
+                .withOrderRef(generatedOrderref)
+                .withInstructions(Arrays.asList(generatedInstruction))
+                .withMetadata(generatedMetaData)
+                .withCustomerDefaults(generatedCustomerDefaults).build();
+
+        return newOrder;
+
+
+    }
+
+    public Order generateAnOrderWith100Instructions() {
+        String generatedOrderref = Randomiser.customRandomAlphanumericString();
+        testData.setData(ORDER_REFERENCE, generatedOrderref);
+
+
+        Instruction[] generatedInstruction = instructionEngineer.generateListOfInstructions();
+        Metadata generatedMetaData = metadataEngineer.generateValidMetadata();
+        CustomerDefaults generatedCustomerDefaults = customerDefaultsEngineer.generateValidCustomerDefaults();
+
+
+        Order newOrder = Order.OrderBuilder.anOrder()
+                .withOrderRef(generatedOrderref)
+                .withInstructions(Arrays.asList(generatedInstruction))
+                .withMetadata(generatedMetaData)
+                .withCustomerDefaults(generatedCustomerDefaults).build();
+
+        return newOrder;
+
+
+    }
+
+    public Order generateAnOrderWith101Instructions() {
+        String generatedOrderref = Randomiser.customRandomAlphanumericString();
+        testData.setData(ORDER_REFERENCE, generatedOrderref);
+
+
+        Instruction[] generatedInstruction = instructionEngineer.generateListOfInstructions();
+        Metadata generatedMetaData = metadataEngineer.generateValidMetadata();
+        CustomerDefaults generatedCustomerDefaults = customerDefaultsEngineer.generateValidCustomerDefaults();
+
+
+        Order newOrder = Order.OrderBuilder.anOrder()
+                .withOrderRef(generatedOrderref)
+                .withInstructions(Arrays.asList(generatedInstruction))
+                .withMetadata(generatedMetaData)
+                .withCustomerDefaults(generatedCustomerDefaults).build();
+
+        return newOrder;
+
+
+
+
+    }
 }

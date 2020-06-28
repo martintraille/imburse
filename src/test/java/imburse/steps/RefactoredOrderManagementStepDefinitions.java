@@ -49,9 +49,26 @@ public class RefactoredOrderManagementStepDefinitions {
 
                 break;
 
-            case "order has a duplicate order reference" :
+            case "order has a duplicate order reference":
                 generatedOrder = orderDirector.anOrderWithADuplicateOrderReference();
+
+                break;
+
+            case "order with metadata value of 101 characters":
+                generatedOrder = orderDirector.anOrderWith101MetadataValueCharacters();
+
+                break;
+
+            case "order containing 100 instructions":
+                generatedOrder = orderDirector.anOrderContaining100Instructions();
+
+                break;
+            case "order containing 101 instructions":
+                generatedOrder = orderDirector.anOrderContaining101Instructions();
+
         }
+
+
     }
 
     @Given("an {string} {string}")
