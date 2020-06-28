@@ -1,5 +1,4 @@
-@STAT
-Feature: refactored an order without instruction
+Feature: Create an Order
 
   As a Imburse user
   I want to be able to create an order without instruction
