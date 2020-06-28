@@ -1,5 +1,6 @@
 == Imburse Test
 These tests demonstrate: -
+------
 Generating a Hmac
 Generating a Bearer token
 ------
