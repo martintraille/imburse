@@ -67,7 +67,7 @@ Feature: Create an Order
     And the error response will show "SOME ERROR"
 
   @BUGFOUND
-  Scenario: NEGATIVE PATH - Order cannot contain more than 101 instructions
+  Scenario: NEGATIVE PATH - Order cannot contain more than 100 instructions
     Given an 'order containing 101 instructions'
     When a refactored 'post' API call is made to the 'Create Order' endpoint
     Then a 400 response code is returned

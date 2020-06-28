@@ -8,14 +8,11 @@ Create Order - /v1/order-management
 Create Instruction - /v1/order-management/{orderRef}/instruction
 
 
-I would have liked to test more endpoints/scenarios but I believe the raw automation framework is in place and
-it allows for additional endpoints and tests to be added.
+I believe the raw automation framework is in place and you can get the gist of what has been implemented.
+The framework also allows for additional endpoints and tests to be added.
 
-I have attempted to demonstrate the use of a builder pattern in generating orders.
-Of course there are various ways to implement this functionlity.
-
-The framework uses
-Cucumber (GIVEN WHEN THEN) Gherkin format, Serenity and Java.
+The framework uses:
+Cucumber (GIVEN WHEN THEN) Gherkin format, Serenity (mainly for reporting) and Java.
 
 == Assumptions
 NOTE: I have identified a couple of issues with the supplied information.
@@ -24,33 +21,13 @@ The TenantId on the supplied documentation is incorrect
 
 These issues delayed me somewhat as I had to first understand the domain under test, before discovering these issues.
 
-The test report tells us out of 22 Tests in total, we have:
-
---
-8 tests failed
---
-
-Those failures show us the following (Which I think should be highlighted/addressed):
-----
-1. A person can login successfully with an alternative email and password e.g 'hacker@hacker.com' and 'hackersRUs'
-2. A person can login successfully with an alternative email and someone else's password 'hacker@hacker.com' and 'password1'
-3. A person can login successfully with a valid email and a valid password that is in Uppercase (making it invalid!) e.g 'test@qa-experience.com' and 'PASSWORD1'
-4. A person can login successfully with an alternative email and a random 16 character password e.g 'hacker@hacker.com' and 'password1sdfsdfs'
-5. A person can login successfully with an valid email and valid password with a space at the end e.g 'test@qa-experience.com' and 'Password1 '
-6. A person can login successfully with an valid email and valid password with a space at the beginning e.g 'test@qa-experience.com' and ' Password1'
-7. A person can login successfully with a truncated email and valid password  e.g 'test@qa-experience.co' and 'password1'
-8. A person can login successfully with a 60 char random username providing it has a @ and a .co in order in there. e.g 'happydays@gmail.comqdqwqwdqdqwdqwdqwqwrqwrqwrqwrqwrqwrqwrqwr' and 'Password1'
-----
-Again, I considered them failures/observations as I have been given no business rules to follow,
-so I have to make my own assumptions based on a typical login functionality and how it should behave.
-
 
 == Setting up your environment
 
 You can clone this project using the following command:
 
 -----
-git clone https://github.com/martintraille/greenflag.git
+git clone https://github.com/martintraille/imburse.git
 -----
 
 == File structure
@@ -58,26 +35,18 @@ git clone https://github.com/martintraille/greenflag.git
 Feature files are located here:
 
 ----
-src/test/resources/features/loginfunctionality
+src/test/resources/features
 ----
 
 Step definitions are located here:
 
 ----
-src/test/java/greenflag/steps
-----
-
-Page objects are located here:
-
-----
-src/test/java/greenflag/ui
+src/test/java/imburse/steps
 ----
 
 == Build/Run the project
 
 This project uses a Maven build. To run the tests use:
-
-Note: Test will run in firefox as default.
 
 ----
 mvn clean verify
@@ -86,22 +55,19 @@ mvn clean verify
 == To run the test in different browsers - e.g. Chrome,  you can use the following:
 
 ----
-$ mvn verify -Dcontext=chrome -Dwebdriver.driver=chrome
-$ mvn verify -Dcontext=firefox -Dwebdriver.driver=firefox
-----
+
 
 == I have also added tags so you can run whatever scenarios you want.
-In my example I have a tag called @bugsfound - as I have found what I consider to be numerous bugs/observations.
+In my example I have a tag called @BUGFOUND - for the failing tests so you can easily run and check them for yourselves.
 
 To execute only those scenarios with a tag use:
 
 ----
-mvn clean verify -Dtags=bugsfound
+mvn clean verify -Dtags=@BUGFOUND
 ----
 
 == Test Reports
 
-One of the major strengths of Serenity is its Test Reporting.
 HTML Test reports are located here:
 
 ----

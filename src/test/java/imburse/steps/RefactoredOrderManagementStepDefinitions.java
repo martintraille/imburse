@@ -35,9 +35,6 @@ public class RefactoredOrderManagementStepDefinitions {
     private String createInstructionResponse;
     private String orderResponse;
 
-   /* @Steps(shared = true)
-    AuthenticatedUserSteps james = new AuthenticatedUserSteps();*/
-
     @Steps(shared = true)
     AuthenticationSteps registeredUser;
 
@@ -148,8 +145,6 @@ public class RefactoredOrderManagementStepDefinitions {
 
             case "Create Instruction":
 
-                //james.callsAnEndpoint(requestType, endpoint, accessToken, accountId, tenantId, generatedInstruction);
-
                 String api = "/v1/order-management/" + generatedOrderref + "/instruction";
                 SerenityRest.given().log().all()
                         .header("Authorization", accessToken)
@@ -171,7 +166,6 @@ public class RefactoredOrderManagementStepDefinitions {
                         .body(generatedOrder)
                         .when()
                         .post(api);
-                //.then().statusCode(Integer.parseInt(testData.getData(EXPECTED_STATUS_CODE).toString()));
                 break;
         }
     }
@@ -208,9 +202,6 @@ public class RefactoredOrderManagementStepDefinitions {
         ErrorMessage errorMessage = SerenityRest.lastResponse().as(ErrorMessage.class);
         Assert.assertEquals(errorCode, errorMessage.getErrors().get(0).getErrorCode());
     }
-
-
-
 
 
 }

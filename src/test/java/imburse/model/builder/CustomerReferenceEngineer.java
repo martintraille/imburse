@@ -2,7 +2,6 @@ package imburse.model.builder;
 
 import imburse.model.request.order.CustomerReference;
 import imburse.model.request.order.CustomerReferenceMetadata;
-import org.junit.Test;
 import utilities.TestData;
 
 import static utilities.TestData.DataKeys.SCHEMEID;

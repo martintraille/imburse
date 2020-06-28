@@ -1,11 +1,8 @@
 package imburse.model.builder;
 
-import imburse.model.request.order.CustomerReferenceMetadata;
 import imburse.model.request.order.Instruction;
 import imburse.model.request.order.Metadata;
 import imburse.utilities.Randomiser;
-
-import java.util.List;
 
 public class InstructionEngineer {
 

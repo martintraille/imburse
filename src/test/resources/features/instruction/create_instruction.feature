@@ -9,7 +9,7 @@ Feature: Create an Instruction
     When he attempts to authenticate via the '/v1/identity/hmac' endpoint
     Then he receives a bearer token
 
-    Scenario: HAPPY PATH - Create an Instruction on an existing order
+  Scenario: HAPPY PATH - Create an Instruction on an existing order
     Given an 'order with no instruction'
     And a refactored 'post' API call is made to the 'Create Order' endpoint
     And the order is successfully created

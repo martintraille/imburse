@@ -9,7 +9,7 @@ public class CustomerRefMetadataEngineer {
 
     public CustomerReferenceMetadata generateCustRefMetadata() {
 
-         validCustRefMetadata = CustomerReferenceMetadata.CustomerReferenceMetadataBuilder.aCustomerReferenceMetadata()
+        validCustRefMetadata = CustomerReferenceMetadata.CustomerReferenceMetadataBuilder.aCustomerReferenceMetadata()
                 .withKey1("NULL")
                 .withKey2("NULL")
                 .withKey3("NULL").build();

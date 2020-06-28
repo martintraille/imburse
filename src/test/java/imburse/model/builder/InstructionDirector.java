@@ -1,7 +1,6 @@
 package imburse.model.builder;
 
 import imburse.model.request.order.Instruction;
-import imburse.model.request.order.Order;
 
 public class InstructionDirector {
 

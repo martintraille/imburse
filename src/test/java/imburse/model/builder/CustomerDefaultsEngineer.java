@@ -11,10 +11,10 @@ public class CustomerDefaultsEngineer {
     public CustomerDefaults generateValidCustomerDefaults() {
         CustomerReference validCustomerReference = customerReferenceEngineer.generateValidCustomerReference();
 
-     CustomerDefaults validCustomerDefaults =  CustomerDefaults.CustomerDefaultsBuilder.aCustomerDefaults()
+        CustomerDefaults validCustomerDefaults = CustomerDefaults.CustomerDefaultsBuilder.aCustomerDefaults()
                 .withCustref1(validCustomerReference)
                 .build();
 
-     return validCustomerDefaults;
+        return validCustomerDefaults;
     }
 }

@@ -37,7 +37,6 @@ public class CustomerReference {
     }
 
 
-
     public static final class CustomerReferenceBuilder {
         private String financialInstrumentId = " ";
         private String schemeId = "";

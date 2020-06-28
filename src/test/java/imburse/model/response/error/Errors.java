@@ -10,28 +10,35 @@ public class Errors {
 
     private Metadata metadata;
 
-    public void setErrorCode(String errorCode){
+    public void setErrorCode(String errorCode) {
         this.errorCode = errorCode;
     }
-    public String getErrorCode(){
+
+    public String getErrorCode() {
         return this.errorCode;
     }
-    public void setMessage(String message){
+
+    public void setMessage(String message) {
         this.message = message;
     }
-    public String getMessage(){
+
+    public String getMessage() {
         return this.message;
     }
-    public void setMessageTemplate(String messageTemplate){
+
+    public void setMessageTemplate(String messageTemplate) {
         this.messageTemplate = messageTemplate;
     }
-    public String getMessageTemplate(){
+
+    public String getMessageTemplate() {
         return this.messageTemplate;
     }
-    public void setMetadata(Metadata metadata){
+
+    public void setMetadata(Metadata metadata) {
         this.metadata = metadata;
     }
-    public Metadata getMetadata(){
+
+    public Metadata getMetadata() {
         return this.metadata;
     }
 }

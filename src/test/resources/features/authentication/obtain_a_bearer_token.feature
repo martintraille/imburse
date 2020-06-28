@@ -1,4 +1,3 @@
-
 Feature: Obtain Bearer Token
 
   As an user of the imburse platform

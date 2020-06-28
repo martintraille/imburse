@@ -1,13 +1,14 @@
 package imburse.model.builder;
 
-import imburse.model.request.order.*;
+import imburse.model.request.order.CustomerDefaults;
+import imburse.model.request.order.Instruction;
+import imburse.model.request.order.Metadata;
+import imburse.model.request.order.Order;
 import imburse.utilities.Randomiser;
 import net.thucydides.core.annotations.Steps;
 import utilities.TestData;
 
-import java.util.ArrayList;
 import java.util.Arrays;
-import java.util.List;
 
 import static utilities.TestData.DataKeys.ORDER_REFERENCE;
 
@@ -61,7 +62,7 @@ public class OrderEngineer {
         String generatedOrderref = Randomiser.customRandomAlphanumericString();
         testData.setData(ORDER_REFERENCE, generatedOrderref);
 
-       Instruction generatedInstruction = instructionEngineer.generateValidInstruction();
+        Instruction generatedInstruction = instructionEngineer.generateValidInstruction();
         Metadata generatedMetaData = metadataEngineer.generateValidMetadata();
         CustomerDefaults generatedCustomerDefaults = customerDefaultsEngineer.generateValidCustomerDefaults();
 
@@ -204,8 +205,6 @@ public class OrderEngineer {
                 .withCustomerDefaults(generatedCustomerDefaults).build();
 
         return newOrder;
-
-
 
 
     }

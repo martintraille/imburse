@@ -70,7 +70,6 @@ public class BearerTokenStepDefinitions {
 
         Serenity.setSessionVariable("generatedAccessToken").to(picard.getAccessToken());
         testData.setData(ACCESS_TOKEN, "Bearer " + picard.getAccessToken());
-        //Serenity.sessionVariableCalled("generatedAccessToken"));
         bearerTokenResponse = picard.getResponseBody();
         Assert.assertTrue(bearerTokenResponse.contains("accessToken"));
         System.out.println("*****Bearer Token is:****" + bearerTokenResponse);
