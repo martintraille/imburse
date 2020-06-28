@@ -15,7 +15,7 @@ public class InstructionEngineer {
 
         Metadata validInstructionMetadata = instructionMetadataEngineer.generateValidInstructionMetadata();
 
-      Instruction validInstruction = Instruction.InstructionBuilder.anInstruction()
+        Instruction validInstruction = Instruction.InstructionBuilder.anInstruction()
                 .withInstructionRef("A123124516")
                 .withCustomerRef("13212412")
                 .withDirection("CREDIT")
@@ -29,7 +29,7 @@ public class InstructionEngineer {
                 .build();
 
 
-      return validInstruction;
+        return validInstruction;
     }
 
     public Instruction[] generateListOfInstructions() {
@@ -53,4 +53,28 @@ public class InstructionEngineer {
 
         return listOfInstructions;
     }
+
+
+    public Instruction generateInstructionWithBlankReference(String attribute) {
+
+        Metadata validInstructionMetadata = instructionMetadataEngineer.generateValidInstructionMetadata();
+
+        Instruction validInstruction = Instruction.InstructionBuilder.anInstruction()
+                .withInstructionRef(attribute)
+                .withCustomerRef("13212412")
+                .withDirection("CREDIT")
+                .withFinancialInstrumentId(" ")
+                .withAmount("5.00")
+                .withCurrency("EUR")
+                .withCountry("IE")
+                .withSettledByDate("2020-07-21")
+                .withSchemeId("654EB81FF7F07F7CF5A1EE3FF6972E90")
+                .withMetadata(validInstructionMetadata)
+                .build();
+
+
+        return validInstruction;
+    }
+
 }
+

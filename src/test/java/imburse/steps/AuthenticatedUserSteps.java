@@ -1,8 +1,10 @@
+/*
 package imburse.steps;
 
 import imburse.model.request.order.*;
 import imburse.utilities.Randomiser;
 import io.cucumber.java.Before;
+import io.cucumber.java.sl.In;
 import io.restassured.builder.ResponseSpecBuilder;
 import io.restassured.specification.ResponseSpecification;
 import net.serenitybdd.core.Serenity;
@@ -45,7 +47,7 @@ public class AuthenticatedUserSteps {
     private TestData testData;
 
     @Step
-    public void callsAnEndpoint(String endpoint, String accessToken, String accountId, String tenantId, Order order) {
+    public void callsAnEndpoint(String requestType, String endpoint, String accessToken, String accountId, String tenantId, Order order) {
 
         String api;
 
@@ -66,7 +68,8 @@ public class AuthenticatedUserSteps {
 
 
             case "Create Instruction":
-                instruction = createNewInstruction();
+
+               Instruction instruction = testData.getData(GENERATED_INSTRUCTION);
                 api = "/v1/order-management/" + generatedOrderref + "/instruction";
                 SerenityRest.given().log().all()
                         .header("Authorization", testData.getData(ACCESS_TOKEN))
@@ -79,6 +82,7 @@ public class AuthenticatedUserSteps {
                 break;
         }
     }
+
 
     public Order createNewOrderWithoutInstruction() {
         generatedOrderref = generateString();
@@ -127,7 +131,7 @@ public class AuthenticatedUserSteps {
     public Order createNewOrderWithInstruction() {
 
         generatedOrderref = generateString();
-        testData.setData(ORDER_REFERENCE,generatedOrderref);
+        testData.setData(ORDER_REFERENCE, generatedOrderref);
 
         List<Instruction> instructions = Arrays.asList(createNewInstruction());
         Serenity.setSessionVariable("generatedOrderRef").to(generatedOrderref);
@@ -208,10 +212,10 @@ public class AuthenticatedUserSteps {
 
         generatedOrderref = Randomiser.customRandomAlphanumericString(noOfChars);
 
-       instructionList = Arrays.asList(createNewInstruction());
+        instructionList = Arrays.asList(createNewInstruction());
         Serenity.setSessionVariable("generatedOrderRef").to(generatedOrderref);
 
-         newMetadata = Metadata.MetadataBuilder.aMetadata()
+        newMetadata = Metadata.MetadataBuilder.aMetadata()
                 .withKey1("TEST01")
                 .withKey2("TEST02")
                 .withKey3("TEST03").build();
@@ -225,3 +229,4 @@ public class AuthenticatedUserSteps {
     }
 
 }
+*/
