@@ -33,6 +33,12 @@ Feature: refactored an order without instruction
     Then a 202 response code is returned
     And a 'HTTP/1.1 202 Accepted' response message is returned
 
+  Scenario: HAPPY PATH - Order can contain up to 100 instructions only
+    Given an 'order containing 100 instructions'
+    When a refactored 'post' API call is made to the 'Create Order' endpoint
+    Then a 202 response code is returned
+    And a 'HTTP/1.1 202 Accepted' response message is returned
+
   Scenario: NEGATIVE PATH - customer reference is mandatory
     Given an 'order with an order reference of' ""
     When a refactored 'post' API call is made to the 'Create Order' endpoint
@@ -45,13 +51,26 @@ Feature: refactored an order without instruction
     Then a 400 response code is returned
     And the error response will show "ORDER_REF_LENGTH_OUT_OF_RANGE"
 
-    @STAT
-    Scenario: NEGATIVE PATH - order reference must be unique and cannot be reused
-      Given an 'order with an instruction'
-      And a refactored 'post' API call is made to the 'Create Order' endpoint
-      And the order is successfully created
-      When an 'order has a duplicate order reference'
-      And a refactored 'post' API call is made to the 'Create Order' endpoint
-      Then a 400 response code is returned
-      And the error response will show "ORDER_ALREADY_EXISTS"
+  Scenario: NEGATIVE PATH - order reference must be unique and cannot be reused
+    Given an 'order with an instruction'
+    And a refactored 'post' API call is made to the 'Create Order' endpoint
+    And the order is successfully created
+    When an 'order has a duplicate order reference'
+    And a refactored 'post' API call is made to the 'Create Order' endpoint
+    Then a 400 response code is returned
+    And the error response will show "ORDER_ALREADY_EXISTS"
+
+  @BUGFOUND
+  Scenario: NEGATIVE PATH - Order metadata value cannot be over 100 characters
+    Given an 'order with metadata value of 101 characters'
+    When a refactored 'post' API call is made to the 'Create Order' endpoint
+    Then a 400 response code is returned
+    And the error response will show "SOME ERROR"
+
+  @BUGFOUND
+  Scenario: NEGATIVE PATH - Order cannot contain more than 101 instructions
+    Given an 'order containing 101 instructions'
+    When a refactored 'post' API call is made to the 'Create Order' endpoint
+    Then a 400 response code is returned
+    And the error response will show "SOME ERROR"
 

@@ -1,5 +1,7 @@
 package imburse.model.builder;
 
+import com.sun.tools.javac.comp.Todo;
+import com.sun.xml.bind.v2.TODO;
 import imburse.model.request.order.Order;
 
 
@@ -22,4 +24,12 @@ public class OrderDirector {
     public Order anOrderWith50CharOrderReference() {return orderEngineer.generateOrderWith50CharOrderRef();}
 
     public Order anOrderWithADuplicateOrderReference() {return orderEngineer.generateOrderWithADuplicateOrderReference();}
+
+    public Order anOrderWith101MetadataValueCharacters() {return orderEngineer.generateOrderWith101MetadataValueCharacters();}
+
+    public Order anOrderContaining100Instructions() {return orderEngineer.generateAnOrderWith100Instructions();}
+
+    //TODO Refactor this!!
+    public Order anOrderContaining101Instructions() {return orderEngineer.generateAnOrderWith101Instructions();}
+
 }
