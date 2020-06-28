@@ -15,10 +15,11 @@ The framework uses:
 Cucumber (GIVEN WHEN THEN) Gherkin format, Serenity (mainly for reporting) and Java.
 
 == Assumptions
+-----
 NOTE: I have identified a couple of issues with the supplied information.
-The API Url from Imburse differes from the API URL used
-The TenantId on the supplied documentation is incorrect
-
+The API Url from Imburse differes from the API URL used.
+The TenantId on the supplied documentation is incorrect.
+-----
 These issues delayed me somewhat as I had to first understand the domain under test, before discovering these issues.
 
 
