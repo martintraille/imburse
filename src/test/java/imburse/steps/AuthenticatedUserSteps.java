@@ -9,7 +9,6 @@ import net.serenitybdd.core.Serenity;
 import net.serenitybdd.rest.SerenityRest;
 import net.thucydides.core.annotations.Step;
 import net.thucydides.core.annotations.Steps;
-import net.thucydides.core.util.EnvironmentVariables;
 import utilities.TestData;
 
 import java.util.*;
@@ -22,10 +21,17 @@ public class AuthenticatedUserSteps {
     private Instruction instruction;
     private String generatedOrderref;
     private Order newOrder;
-     private Randomiser randomiser;
+    private Randomiser randomiser;
 
     private static ResponseSpecification responseSpec;
-
+    private String generatedMetadataValue;
+    private Order customisedOrder;
+    public Instruction orderInstructions;
+    private CustomerReference newCustomerReference;
+    private Metadata newMetadata;
+    private CustomerReferenceMetadata newCustomerReferenceMetadata;
+    private CustomerDefaults newCustomerDefaults;
+    private List<Instruction> instructionList;
 
     @Before
     public static void createResponseSpecification() {
@@ -55,7 +61,7 @@ public class AuthenticatedUserSteps {
                         .body(order)
                         .when()
                         .post(api);
-                        //.then().statusCode(Integer.parseInt(testData.getData(EXPECTED_STATUS_CODE).toString()));
+                //.then().statusCode(Integer.parseInt(testData.getData(EXPECTED_STATUS_CODE).toString()));
                 break;
 
 
@@ -121,6 +127,7 @@ public class AuthenticatedUserSteps {
     public Order createNewOrderWithInstruction() {
 
         generatedOrderref = generateString();
+        testData.setData(ORDER_REFERENCE,generatedOrderref);
 
         List<Instruction> instructions = Arrays.asList(createNewInstruction());
         Serenity.setSessionVariable("generatedOrderRef").to(generatedOrderref);
@@ -145,7 +152,7 @@ public class AuthenticatedUserSteps {
 
             case "RaNdOmAlPhANuMeRiC._-":
 
-            case "DuplicateOrderRef" :
+            case "DuplicateOrderRef":
 
                 generatedOrderref = orderRef + Randomiser.customRandomAlphanumericString();
                 testData.setData(ORDER_REFERENCE, generatedOrderref);
@@ -156,11 +163,13 @@ public class AuthenticatedUserSteps {
                 generatedOrderref = testData.getData(ORDER_REFERENCE);
                 break;
 
-            default :generatedOrderref = (orderRef);
+            default:
+                generatedOrderref = (orderRef);
         }
 
         List<Instruction> instructions = Arrays.asList(createNewInstruction());
         Serenity.setSessionVariable("generatedOrderRef").to(generatedOrderref);
+
 
         Metadata newMetadata = Metadata.MetadataBuilder.aMetadata()
                 .withKey1("TEST01")
@@ -168,21 +177,20 @@ public class AuthenticatedUserSteps {
                 .withKey3("TEST03").build();
 
 
-       CustomerReferenceMetadata newCustomerReferenceMetadata = CustomerReferenceMetadata.CustomerReferenceMetadataBuilder.aCustomerReferenceMetadata()
-               .withKey1("NULL")
-               .withKey2("NULL")
-               .withKey3("NULL").build();
+        CustomerReferenceMetadata newCustomerReferenceMetadata = CustomerReferenceMetadata.CustomerReferenceMetadataBuilder.aCustomerReferenceMetadata()
+                .withKey1("NULL")
+                .withKey2("NULL")
+                .withKey3("NULL").build();
 
-       CustomerReference newCustomerReference = CustomerReference.CustomerReferenceBuilder.aCustomerReference()
-               .withFinancialInstrumentId("")
-               .withSchemeId(testData.getData(SCHEMEID))
-               .withCustomerReferenceMetadata(newCustomerReferenceMetadata)
-               .build();
+        CustomerReference newCustomerReference = CustomerReference.CustomerReferenceBuilder.aCustomerReference()
+                .withFinancialInstrumentId("")
+                .withSchemeId(testData.getData(SCHEMEID))
+                .withCustomerReferenceMetadata(newCustomerReferenceMetadata)
+                .build();
 
-       CustomerDefaults newCustomerDefaults = CustomerDefaults.CustomerDefaultsBuilder.aCustomerDefaults()
-               .withCustref1(newCustomerReference)
-               .build();
-
+        CustomerDefaults newCustomerDefaults = CustomerDefaults.CustomerDefaultsBuilder.aCustomerDefaults()
+                .withCustref1(newCustomerReference)
+                .build();
 
 
         newOrder = Order.OrderBuilder.anOrder()
@@ -196,35 +204,24 @@ public class AuthenticatedUserSteps {
     }
 
 
-
-
-
     public Order createNewOrderWithInstruction(int noOfChars) {
 
-       generatedOrderref =  Randomiser.customRandomAlphanumericString(noOfChars);
+        generatedOrderref = Randomiser.customRandomAlphanumericString(noOfChars);
 
-
-        List<Instruction> instructions = Arrays.asList(createNewInstruction());
+       instructionList = Arrays.asList(createNewInstruction());
         Serenity.setSessionVariable("generatedOrderRef").to(generatedOrderref);
 
-        Metadata newMetadata = Metadata.MetadataBuilder.aMetadata()
+         newMetadata = Metadata.MetadataBuilder.aMetadata()
                 .withKey1("TEST01")
                 .withKey2("TEST02")
                 .withKey3("TEST03").build();
 
         newOrder = Order.OrderBuilder.anOrder()
                 .withOrderRef(generatedOrderref)
-                .withInstructions(instructions)
+                .withInstructions(instructionList)
                 .withMetadata(newMetadata).build();
 
         return newOrder;
-
     }
-
-
-
-
-
-
 
 }

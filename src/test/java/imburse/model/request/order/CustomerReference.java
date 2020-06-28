@@ -1,6 +1,7 @@
 package imburse.model.request.order;
 
 public class CustomerReference {
+
     public CustomerReference(String financialInstrumentId, String schemeId, CustomerReferenceMetadata Metadata) {
         this.financialInstrumentId = financialInstrumentId;
         this.schemeId = schemeId;
