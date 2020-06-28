@@ -53,11 +53,6 @@ This project uses a Maven build. To run the tests use:
 mvn clean verify
 ----
 
-== To run the test in different browsers - e.g. Chrome,  you can use the following:
-
-----
-
-
 == I have also added tags so you can run whatever scenarios you want.
 In my example I have a tag called @BUGFOUND - for the failing tests so you can easily run and check them for yourselves.
 
