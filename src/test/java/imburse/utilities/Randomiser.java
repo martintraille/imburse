@@ -36,7 +36,7 @@ return str;
 
     public static String customRandomAlphanumericString(int noOfChars) {
         String str;
-        int length = 20;
+        int length = noOfChars;
         String digits = "0123456789";
         String specials = ".-_";
         String all = "ABCDEFGHIJKLMNOPQRSTUVWXYZ"

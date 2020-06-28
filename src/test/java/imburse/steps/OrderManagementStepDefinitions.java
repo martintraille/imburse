@@ -4,6 +4,7 @@ import imburse.model.request.order.Instruction;
 import imburse.model.request.order.Order;
 import imburse.model.response.error.ErrorMessage;
 import io.cucumber.java.Before;
+import io.cucumber.java.bs.I;
 import io.cucumber.java.en.Given;
 import io.cucumber.java.en.Then;
 import io.cucumber.java.en.When;
@@ -51,13 +52,13 @@ public class OrderManagementStepDefinitions {
 
     }
 
-    @Given("an order with an instruction")
+  /*  @Given("an order with an instruction")
     public void an_order_with_an_instruction() {
         generatedOrder = james.createNewOrderWithInstruction();
         testData.setData(EXPECTED_STATUS_CODE, environmentVariables.getProperty("orderwithinstructionstatuscode"));
         testData.setData(EXPECTED_STATUS_CODE_MESSAGE, environmentVariables.getProperty("orderwithinstructionsstatuscodemessage"));
 
-    }
+    }*/
 
     @Given("an order with a {int} character order reference")
     public void an_order_with_a_character_order_reference(int numberOfChars) {
@@ -91,7 +92,7 @@ public class OrderManagementStepDefinitions {
     }
 
 
-    @When("a {string} API call is made to the {string} endpoint")
+/*    @When("a {string} API call is made to the {string} endpoint")
     public void a_API_call_is_made_to_the_endpoint(String requestType, String endpoint) {
         accountId = testData.getData(ACCOUNTID);
         tenantId = testData.getData(TENANTID);
@@ -99,7 +100,7 @@ public class OrderManagementStepDefinitions {
 
         james.callsAnEndpoint(endpoint, accessToken, accountId, tenantId, generatedOrder);
 
-    }
+    }*/
 
   /*  @When("we have an order with the same order reference {string}")
     public void we_have_an_order_with_the_same_order_reference(String duplicateOrderRef) {
@@ -124,7 +125,7 @@ public class OrderManagementStepDefinitions {
     @Given("an existing order is created with no instruction")
     public void an_order_is_created_with_no_Instruction() throws UnsupportedEncodingException {
         an_order_without_an_instruction();
-        a_API_call_is_made_to_the_endpoint("post", "Create Order");
+    //    a_API_call_is_made_to_the_endpoint("post", "Create Order");
         the_order_is_successfully_created();
     }
 
@@ -134,6 +135,12 @@ public class OrderManagementStepDefinitions {
         createInstructionResponse = registeredUser.getResponseBody();
         assertTrue(createInstructionResponse.isEmpty());
     }
+
+    @Given("an order with a {int} character metadata value")
+    public void an_order_with_a_character_metadata_value(Integer something) {
+        testData.setData(ORDER_METADATA_NO_OF_CHARS, something);
+    }
+
 
 
     public String generateString() {

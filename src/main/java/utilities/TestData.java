@@ -33,13 +33,15 @@ public class TestData {
     }
 
     public enum DataKeys {
+        SCENARIO,
         ACCOUNTID,
         TENANTID,
         ACCESS_TOKEN,
         SCHEMEID,
         EXPECTED_STATUS_CODE,
         EXPECTED_STATUS_CODE_MESSAGE,
-        ORDER_REFERENCE
+        ORDER_REFERENCE,
+        ORDER_METADATA_NO_OF_CHARS
     }
 
 }
