@@ -2,11 +2,11 @@
 These tests demonstrate: -
 Generating a Hmac
 Generating a Bearer token
-
+------
 Get Access Token - /v1/identity/hmac
 Create Order - /v1/order-management
 Create Instruction - /v1/order-management/{orderRef}/instruction
-
+------
 
 I believe the raw automation framework is in place and you can get the gist of what has been implemented.
 The framework also allows for additional endpoints and tests to be added.
