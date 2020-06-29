@@ -23,7 +23,8 @@ NOTE: I have identified a couple of issues with the supplied information.
 The API Url from Imburse differs from the API URL used.
 The TenantId on the supplied documentation is incorrect.
 
-This delayed me somewhat as I first had to figure out what was wrong (i.e incorrect TenantId), before then proceeding with familiarising myself and gaining an understanding of the domain under test.
+This delayed me somewhat as I first had to figure out what was wrong (i.e incorrect TenantId), before then proceeding with familiarising myself 
+and gaining an understanding of the domain under test.
 -----
 
 
