@@ -11,7 +11,7 @@ Create Order - /v1/order-management
 Create Instruction - /v1/order-management/{orderRef}/instruction
 ------
 
-I believe the raw automation framework is in place and you can get the gist of what has been implemented.
+I would have liked to add more tests but I believe the raw automation framework is in place and you can get the gist of what has been implemented.
 The framework also allows for additional endpoints and tests to be added.
 
 The framework uses:
@@ -20,10 +20,12 @@ Cucumber (GIVEN WHEN THEN) Gherkin format, Serenity (mainly for reporting) and J
 == Assumptions
 -----
 NOTE: I have identified a couple of issues with the supplied information.
-The API Url from Imburse differes from the API URL used.
+The API Url from Imburse differs from the API URL used.
 The TenantId on the supplied documentation is incorrect.
+
+This delayed me somewhat as I first had to figure out what was wrong (i.e incorrect TenantId), before then proceeding with familiarising myself and gaining an understanding of the domain under test.
 -----
-These issues delayed me somewhat as I had to first understand the domain under test, before discovering these issues.
+
 
 
 == Setting up your environment
