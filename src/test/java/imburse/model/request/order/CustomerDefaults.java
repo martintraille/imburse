@@ -3,9 +3,9 @@ package imburse.model.request.order;
 public class CustomerDefaults {
 
 
-    private CustomerReference custref1;
-    private CustomerReference custref2;
-    private CustomerReference custref3;
+    private final CustomerReference custref1;
+    private final CustomerReference custref2;
+    private final CustomerReference custref3;
 
     public CustomerDefaults(CustomerReference custref1, CustomerReference custref2, CustomerReference custref3) {
         this.custref1 = custref1;
@@ -13,30 +13,6 @@ public class CustomerDefaults {
         this.custref3 = custref3;
     }
 
-
-    public CustomerReference getCustref1() {
-        return custref1;
-    }
-
-    public void setCustref1(CustomerReference custref1) {
-        this.custref1 = custref1;
-    }
-
-    public CustomerReference getCustref2() {
-        return custref2;
-    }
-
-    public void setCustref2(CustomerReference custref2) {
-        this.custref2 = custref2;
-    }
-
-    public CustomerReference getCustref3() {
-        return custref3;
-    }
-
-    public void setCustref3(CustomerReference custref3) {
-        this.custref3 = custref3;
-    }
 
 
     public static final class CustomerDefaultsBuilder {

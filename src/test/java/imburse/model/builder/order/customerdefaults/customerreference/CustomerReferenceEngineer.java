@@ -1,5 +1,6 @@
-package imburse.model.builder;
+package imburse.model.builder.order.customerdefaults.customerreference;
 
+import imburse.model.builder.order.customerdefaults.customerreference.customermetadata.CustomerRefMetadataEngineer;
 import imburse.model.request.order.CustomerReference;
 import imburse.model.request.order.CustomerReferenceMetadata;
 import utilities.TestData;
@@ -12,19 +13,18 @@ public class CustomerReferenceEngineer {
 
     CustomerRefMetadataEngineer customerRefMetadataEngineer = new CustomerRefMetadataEngineer();
 
- private TestData testData = new TestData();
+ private final TestData testData = new TestData();
 
     public CustomerReference generateValidCustomerReference() {
 
      CustomerReferenceMetadata validCustRefMetadata = customerRefMetadataEngineer.generateCustRefMetadata();
 
-        CustomerReference validCustRef = CustomerReference.CustomerReferenceBuilder.aCustomerReference()
+        return CustomerReference.CustomerReferenceBuilder.aCustomerReference()
                 .withFinancialInstrumentId("")
                 .withSchemeId(testData.getData(SCHEMEID))
                 .withCustomerReferenceMetadata(validCustRefMetadata)
                 .build();
 
-        return validCustRef;
 
     }
 }

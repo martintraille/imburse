@@ -41,9 +41,6 @@ public class TestData {
         EXPECTED_STATUS_CODE,
         EXPECTED_STATUS_CODE_MESSAGE,
         ORDER_REFERENCE,
-       // ORDER_METADATA_NO_OF_CHARS,
-       // GENERATED_ORDER,
-       // GENERATED_INSTRUCTION
     }
 
 }

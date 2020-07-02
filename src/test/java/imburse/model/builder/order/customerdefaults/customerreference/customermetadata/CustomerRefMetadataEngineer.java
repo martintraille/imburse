@@ -1,19 +1,15 @@
-package imburse.model.builder;
+package imburse.model.builder.order.customerdefaults.customerreference.customermetadata;
 
 import imburse.model.request.order.CustomerReferenceMetadata;
 
 public class CustomerRefMetadataEngineer {
 
 
-    private CustomerReferenceMetadata validCustRefMetadata;
-
     public CustomerReferenceMetadata generateCustRefMetadata() {
 
-        validCustRefMetadata = CustomerReferenceMetadata.CustomerReferenceMetadataBuilder.aCustomerReferenceMetadata()
+        return CustomerReferenceMetadata.CustomerReferenceMetadataBuilder.aCustomerReferenceMetadata()
                 .withKey1("NULL")
                 .withKey2("NULL")
                 .withKey3("NULL").build();
-
-        return validCustRefMetadata;
     }
 }

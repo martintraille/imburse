@@ -1,7 +1,7 @@
 package imburse.steps;
 
-import imburse.model.builder.InstructionDirector;
-import imburse.model.builder.OrderDirector;
+import imburse.model.builder.order.instruction.InstructionDirector;
+import imburse.model.builder.order.OrderDirector;
 import imburse.model.request.order.Instruction;
 import imburse.model.request.order.Order;
 import imburse.model.response.error.ErrorMessage;
@@ -18,18 +18,19 @@ import org.junit.runner.RunWith;
 import utilities.TestData;
 
 import static imburse.utilities.Randomiser.customRandomAlphanumericString;
+import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertTrue;
 import static utilities.TestData.DataKeys.*;
 
 
 @RunWith(SerenityRunner.class)
-public class RefactoredOrderManagementStepDefinitions {
+public class OrderManagementStepDefinitions {
 
-    private OrderDirector orderDirector = new OrderDirector();
-    private InstructionDirector instructionDirector = new InstructionDirector();
+    private final OrderDirector orderDirector = new OrderDirector();
+    private final InstructionDirector instructionDirector = new InstructionDirector();
     private Order generatedOrder;
     private Instruction generatedInstruction;
-    private TestData testData = new TestData();
+    private final TestData testData = new TestData();
     private EnvironmentVariables environmentVariables;
     private Randomiser randomiser;
     private String createInstructionResponse;
@@ -72,23 +73,9 @@ public class RefactoredOrderManagementStepDefinitions {
 
                 break;
 
-            case "order containing 100 instructions":
-                setGeneratedOrder(orderDirector.anOrderContaining100Instructions());
-
-                break;
-            case "order containing 101 instructions":
-                setGeneratedOrder(orderDirector.anOrderContaining101Instructions());
-
-                break;
-
             case "existing order with no instruction":
                 testData.setData(SCENARIO, scenario);
-                String accountId = testData.getData(ACCOUNTID);
-                String tenantId = testData.getData(TENANTID);
-                String accessToken = testData.getData(ACCESS_TOKEN);
-
                 setGeneratedOrder(orderDirector.anOrderWithNoInstruction());
-                // testData.setData(GENERATED_ORDER, generatedOrder);
 
                 break;
 
@@ -96,10 +83,7 @@ public class RefactoredOrderManagementStepDefinitions {
                 setGeneratedInstruction(instructionDirector.aValidInstruction());
 
                 break;
-
         }
-
-
     }
 
     @Given("an {string} {string}")
@@ -108,32 +92,37 @@ public class RefactoredOrderManagementStepDefinitions {
 
             case "order with an order reference of":
                 testData.setData(SCENARIO, scenario);
-                generatedOrder = orderDirector.anOrderWithABlankOrderRef(attribute);
+                setGeneratedOrder(orderDirector.anOrderWithABlankOrderRef(attribute));
 
                 break;
 
             case "order with an order reference of 51 characters:":
                 testData.setData(SCENARIO, scenario);
-                generatedOrder = orderDirector.anOrderWithAnOutOfBoundsOrderRef(attribute);
+                setGeneratedOrder(orderDirector.anOrderWithAnOutOfBoundsOrderRef(attribute));
 
                 break;
 
             case "order with an alphanumeric order reference of":
                 String generatedOrderRef = attribute + customRandomAlphanumericString();
                 testData.setData(ORDER_REFERENCE, generatedOrderRef);
-                generatedOrder = orderDirector.anOrderWithAnAlphaNumericOrderReference(generatedOrderRef);
+                setGeneratedOrder(orderDirector.anOrderWithAnAlphaNumericOrderReference(generatedOrderRef));
 
                 break;
 
             case "instruction is created with an instruction reference of":
-                generatedInstruction = instructionDirector.anInstructionWithABlankReference(attribute);
+                setGeneratedInstruction(instructionDirector.anInstructionWithABlankReference(attribute));
 
+                break;
+
+            case "order with total number of instructions":
+                int noOfInstructions = Integer.parseInt(attribute);
+                setGeneratedOrder(orderDirector.anOrderContainingCustomNoOfInstructions(noOfInstructions));
                 break;
         }
 
     }
 
-    @When("a refactored {string} API call is made to the {string} endpoint")
+    @When("a {string} API call is made to the {string} endpoint")
     public void a_API_call_is_made_to_the_endpoint(String requestType, String endpoint) {
         String accountId = testData.getData(ACCOUNTID);
         String tenantId = testData.getData(TENANTID);
@@ -172,15 +161,15 @@ public class RefactoredOrderManagementStepDefinitions {
 
     @Then("the instruction has been created successfully")
     public void the_instruction_has_been_created_successfully() {
-        assertTrue(registeredUser.getStatusCode().equals("HTTP/1.1 201 Created"));
-        createInstructionResponse = registeredUser.getResponseBody();
+        assertEquals("HTTP/1.1 201 Created", registeredUser.getStatusCode());
+        setCreateInstructionResponse(registeredUser.getResponseBody());
         assertTrue(createInstructionResponse.isEmpty());
     }
 
     @Then("the order is successfully created")
     public void the_order_is_successfully_created() {
-        assertTrue(registeredUser.getStatusCode().equals(testData.getData(EXPECTED_STATUS_CODE_MESSAGE)));
-        orderResponse = registeredUser.getResponseBody();
+        assertEquals(registeredUser.getStatusCode(), testData.getData(EXPECTED_STATUS_CODE_MESSAGE));
+        setOrderResponse(registeredUser.getResponseBody());
         assertTrue(orderResponse.isEmpty());
     }
 
@@ -192,7 +181,7 @@ public class RefactoredOrderManagementStepDefinitions {
     @Then("a {string} response message is returned")
     public void a_success_message_is_generated(String responseMessage) {
         Assert.assertEquals(responseMessage, SerenityRest.lastResponse().getStatusLine());
-        orderResponse = registeredUser.getResponseBody();
+        setOrderResponse(registeredUser.getResponseBody());
         assertTrue(orderResponse.isEmpty());
     }
 
@@ -212,5 +201,13 @@ public class RefactoredOrderManagementStepDefinitions {
         this.generatedInstruction = generatedInstruction;
     }
 
+
+    public void setCreateInstructionResponse(String createInstructionResponse) {
+        this.createInstructionResponse = createInstructionResponse;
+    }
+
+    public void setOrderResponse(String orderResponse) {
+        this.orderResponse = orderResponse;
+    }
 
 }

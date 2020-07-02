@@ -20,22 +20,6 @@ public class CustomerReference {
         this.metadata = metadata;
     }
 
-    public String getFinancialInstrumentId() {
-        return financialInstrumentId;
-    }
-
-    public void setFinancialInstrumentId(String financialInstrumentId) {
-        this.financialInstrumentId = financialInstrumentId;
-    }
-
-    public String getSchemeId() {
-        return schemeId;
-    }
-
-    public void setSchemeId(String schemeId) {
-        this.schemeId = schemeId;
-    }
-
 
     public static final class CustomerReferenceBuilder {
         private String financialInstrumentId = " ";
