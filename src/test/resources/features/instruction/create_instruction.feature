@@ -11,10 +11,10 @@ Feature: Create an Instruction
 
   Scenario: HAPPY PATH - Create an Instruction on an existing order
     Given an 'order with no instruction'
-    And a refactored 'post' API call is made to the 'Create Order' endpoint
+    And a 'post' API call is made to the 'Create Order' endpoint
     And the order is successfully created
     And an 'Instruction is created'
-    When a refactored 'post' API call is made to the 'Create Instruction' endpoint
+    When a 'post' API call is made to the 'Create Instruction' endpoint
     Then the instruction has been created successfully
 
 # TO IMPLEMENT

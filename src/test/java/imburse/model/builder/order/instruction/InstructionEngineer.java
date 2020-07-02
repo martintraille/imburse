@@ -1,4 +1,4 @@
-package imburse.model.builder;
+package imburse.model.builder.order.instruction;
 
 import imburse.model.request.order.Instruction;
 import imburse.model.request.order.Metadata;
@@ -12,7 +12,8 @@ public class InstructionEngineer {
 
         Metadata validInstructionMetadata = instructionMetadataEngineer.generateValidInstructionMetadata();
 
-        Instruction validInstruction = Instruction.InstructionBuilder.anInstruction()
+
+        return Instruction.InstructionBuilder.anInstruction()
                 .withInstructionRef("A123124516")
                 .withCustomerRef("13212412")
                 .withDirection("CREDIT")
@@ -24,15 +25,12 @@ public class InstructionEngineer {
                 .withSchemeId("654EB81FF7F07F7CF5A1EE3FF6972E90")
                 .withMetadata(validInstructionMetadata)
                 .build();
-
-
-        return validInstruction;
     }
 
-    public Instruction[] generateListOfInstructions() {
+    public Instruction[] generateListOfInstructions(int noOfInstructions) {
         Metadata validInstructionMetadata = instructionMetadataEngineer.generateValidInstructionMetadata();
 
-        Instruction[] listOfInstructions = new Instruction[101];
+        Instruction[] listOfInstructions = new Instruction[noOfInstructions];
         for (int i = 0; i < listOfInstructions.length; i++) {
             listOfInstructions[i] = Instruction.InstructionBuilder.anInstruction()
                     .withInstructionRef(Randomiser.customRandomAlphanumericString())
@@ -56,7 +54,8 @@ public class InstructionEngineer {
 
         Metadata validInstructionMetadata = instructionMetadataEngineer.generateValidInstructionMetadata();
 
-        Instruction validInstruction = Instruction.InstructionBuilder.anInstruction()
+
+        return Instruction.InstructionBuilder.anInstruction()
                 .withInstructionRef(attribute)
                 .withCustomerRef("13212412")
                 .withDirection("CREDIT")
@@ -68,9 +67,6 @@ public class InstructionEngineer {
                 .withSchemeId("654EB81FF7F07F7CF5A1EE3FF6972E90")
                 .withMetadata(validInstructionMetadata)
                 .build();
-
-
-        return validInstruction;
     }
 
 }

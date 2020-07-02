@@ -28,7 +28,6 @@ public class BearerTokenStepDefinitions {
     private String accountId;
     private String tenantId;
     private String hmac;
-    private String bearerTokenResponse;
     private EnvironmentVariables environmentVariables;
 
 
@@ -71,7 +70,7 @@ public class BearerTokenStepDefinitions {
 
         Serenity.setSessionVariable("generatedAccessToken").to(picard.getAccessToken());
         testData.setData(ACCESS_TOKEN, "Bearer " + picard.getAccessToken());
-        bearerTokenResponse = picard.getResponseBody();
+        String bearerTokenResponse = picard.getResponseBody();
         Assert.assertTrue(bearerTokenResponse.contains("accessToken"));
         System.out.println("*****Bearer Token is:****" + bearerTokenResponse);
         System.out.println("********ENUMED***********" + testData.getData(ACCESS_TOKEN));
@@ -94,7 +93,6 @@ public class BearerTokenStepDefinitions {
     public void setTenantId(String tenantId) {
         this.tenantId = tenantId;
     }
-
 
 
 }

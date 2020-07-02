@@ -1,10 +1,10 @@
-package imburse.model.builder;
+package imburse.model.builder.order.instruction;
 
 import imburse.model.request.order.Instruction;
 
 public class InstructionDirector {
 
-    private InstructionEngineer instructionEngineer = new InstructionEngineer();
+    private final InstructionEngineer instructionEngineer = new InstructionEngineer();
 
     public Instruction aValidInstruction() {
         return instructionEngineer.generateValidInstruction();

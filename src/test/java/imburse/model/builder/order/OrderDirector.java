@@ -1,51 +1,54 @@
-package imburse.model.builder;
+package imburse.model.builder.order;
 
 import imburse.model.request.order.Order;
 
 
-public class OrderDirector {
+public class OrderDirector implements OrderPlan {
 
-    private OrderEngineer orderEngineer = new OrderEngineer();
+    private final OrderEngineer orderEngineer = new OrderEngineer();
 
+    @Override
     public Order anOrderWithNoInstruction() {
         return orderEngineer.generatedOrderWithNoInstruction();
     }
 
-    public Order anOrderWithABlankOrderRef(String attribute) {
-        return orderEngineer.generatedOrderWithABlankOrderRef(attribute);
-    }
+    @Override
+    public Order anOrderWithABlankOrderRef(String attribute) { return orderEngineer.generatedOrderWithABlankOrderRef(attribute); }
 
+    @Override
     public Order anOrderWithAnInstruction() {
         return orderEngineer.generateOrderWithAnInstruction();
     }
 
+    @Override
     public Order anOrderWithAnOutOfBoundsOrderRef(String attribute) {
         return orderEngineer.generateOrderWithAnOutOfBoundsOrderRef(attribute);
     }
 
+    @Override
     public Order anOrderWithAnAlphaNumericOrderReference(String attribute) {
         return orderEngineer.generateOrderWithAnAlphaNumericOrderReference(attribute);
     }
 
+    @Override
     public Order anOrderWith50CharOrderReference() {
         return orderEngineer.generateOrderWith50CharOrderRef();
     }
 
+    @Override
     public Order anOrderWithADuplicateOrderReference() {
         return orderEngineer.generateOrderWithADuplicateOrderReference();
     }
 
+    @Override
     public Order anOrderWith101MetadataValueCharacters() {
         return orderEngineer.generateOrderWith101MetadataValueCharacters();
     }
 
-    public Order anOrderContaining100Instructions() {
-        return orderEngineer.generateAnOrderWith100Instructions();
+    @Override
+    public Order anOrderContainingCustomNoOfInstructions(int noOfInstructions) {
+        return orderEngineer.generateAnOrderWithCustomNoOfInstructions(noOfInstructions);
     }
 
-    //TODO Refactor this!!
-    public Order anOrderContaining101Instructions() {
-        return orderEngineer.generateAnOrderWith101Instructions();
-    }
 
 }
