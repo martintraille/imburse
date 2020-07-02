@@ -27,8 +27,8 @@ public class RefactoredOrderManagementStepDefinitions {
 
     private OrderDirector orderDirector = new OrderDirector();
     private InstructionDirector instructionDirector = new InstructionDirector();
-    public Order generatedOrder;
-    public Instruction generatedInstruction;
+    private Order generatedOrder;
+    private Instruction generatedInstruction;
     private TestData testData = new TestData();
     private EnvironmentVariables environmentVariables;
     private Randomiser randomiser;
@@ -46,38 +46,38 @@ public class RefactoredOrderManagementStepDefinitions {
                 testData.setData(SCENARIO, scenario);
                 testData.setData(EXPECTED_STATUS_CODE, environmentVariables.getProperty("orderwithoutinstructionstatuscode"));
                 testData.setData(EXPECTED_STATUS_CODE_MESSAGE, environmentVariables.getProperty("orderwithoutinstructionsstatuscodemessage"));
-                generatedOrder = orderDirector.anOrderWithNoInstruction();
+                setGeneratedOrder(orderDirector.anOrderWithNoInstruction());
                 break;
 
             case "order with an instruction":
                 testData.setData(EXPECTED_STATUS_CODE, environmentVariables.getProperty("orderwithinstructionstatuscode"));
                 testData.setData(EXPECTED_STATUS_CODE_MESSAGE, environmentVariables.getProperty("orderwithinstructionsstatuscodemessage"));
 
-                generatedOrder = orderDirector.anOrderWithAnInstruction();
+                setGeneratedOrder(orderDirector.anOrderWithAnInstruction());
 
                 break;
 
             case "order with an order reference of 50 alphanumeric characters":
-                generatedOrder = orderDirector.anOrderWith50CharOrderReference();
+                setGeneratedOrder(orderDirector.anOrderWith50CharOrderReference());
 
                 break;
 
             case "order has a duplicate order reference":
-                generatedOrder = orderDirector.anOrderWithADuplicateOrderReference();
+                setGeneratedOrder(orderDirector.anOrderWithADuplicateOrderReference());
 
                 break;
 
             case "order with metadata value of 101 characters":
-                generatedOrder = orderDirector.anOrderWith101MetadataValueCharacters();
+                setGeneratedOrder(orderDirector.anOrderWith101MetadataValueCharacters());
 
                 break;
 
             case "order containing 100 instructions":
-                generatedOrder = orderDirector.anOrderContaining100Instructions();
+                setGeneratedOrder(orderDirector.anOrderContaining100Instructions());
 
                 break;
             case "order containing 101 instructions":
-                generatedOrder = orderDirector.anOrderContaining101Instructions();
+                setGeneratedOrder(orderDirector.anOrderContaining101Instructions());
 
                 break;
 
@@ -87,14 +87,13 @@ public class RefactoredOrderManagementStepDefinitions {
                 String tenantId = testData.getData(TENANTID);
                 String accessToken = testData.getData(ACCESS_TOKEN);
 
-                generatedOrder = orderDirector.anOrderWithNoInstruction();
+                setGeneratedOrder(orderDirector.anOrderWithNoInstruction());
                 // testData.setData(GENERATED_ORDER, generatedOrder);
 
                 break;
 
             case "Instruction is created":
-                generatedInstruction = instructionDirector.aValidInstruction();
-
+                setGeneratedInstruction(instructionDirector.aValidInstruction());
 
                 break;
 
@@ -201,6 +200,16 @@ public class RefactoredOrderManagementStepDefinitions {
     public void the_response_will_show(String errorCode) {
         ErrorMessage errorMessage = SerenityRest.lastResponse().as(ErrorMessage.class);
         Assert.assertEquals(errorCode, errorMessage.getErrors().get(0).getErrorCode());
+    }
+
+
+    public void setGeneratedOrder(Order generatedOrder) {
+        this.generatedOrder = generatedOrder;
+    }
+
+
+    public void setGeneratedInstruction(Instruction generatedInstruction) {
+        this.generatedInstruction = generatedInstruction;
     }
 
 

@@ -24,6 +24,7 @@ import static utilities.TestData.DataKeys.*;
 @RunWith(SerenityRunner.class)
 public class BearerTokenStepDefinitions {
 
+
     private String accountId;
     private String tenantId;
     private String hmac;
@@ -51,13 +52,13 @@ public class BearerTokenStepDefinitions {
 
     @Given("(Picard) has a valid accountId and tenantID")
     public void registered_user_has_a_valid_accountId_and_tenantID() {
-        accountId = testData.getData(ACCOUNTID);
-        tenantId = testData.getData(TENANTID);
+        setAccountId(testData.getData(ACCOUNTID));
+        setTenantId(testData.getData(TENANTID));
     }
 
     @When("he attempts to authenticate via the {string} endpoint")
     public void he_attempts_to_authenticate_via_the_endpoint(String endpoint) throws UnsupportedEncodingException {
-        hmac = generatesHmac();
+        setHmac(generatesHmac());
         SerenityRest.given().log().all().queryParam("AccountId", accountId).queryParam("TenantId", tenantId)
                 .header("Authorization", "Hmac " + hmac).header("ContentType", "application/json")
                 .body("")
@@ -76,6 +77,24 @@ public class BearerTokenStepDefinitions {
         System.out.println("********ENUMED***********" + testData.getData(ACCESS_TOKEN));
 
     }
+
+    public String getHmac() {
+        return hmac;
+    }
+
+    public void setHmac(String hmac) {
+        this.hmac = hmac;
+    }
+
+
+    public void setAccountId(String accountId) {
+        this.accountId = accountId;
+    }
+
+    public void setTenantId(String tenantId) {
+        this.tenantId = tenantId;
+    }
+
 
 
 }
