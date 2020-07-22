@@ -3,10 +3,14 @@ package imburse.model.builder.order.instruction;
 import imburse.model.request.order.Instruction;
 import imburse.model.request.order.Metadata;
 import imburse.utilities.Randomiser;
+import utilities.TestData;
+
+import static utilities.TestData.DataKeys.SCHEMEID;
 
 public class InstructionEngineer {
 
     InstructionMetadataEngineer instructionMetadataEngineer = new InstructionMetadataEngineer();
+    private final TestData testData = new TestData();
 
     public Instruction generateValidInstruction() {
 
@@ -22,7 +26,7 @@ public class InstructionEngineer {
                 .withCurrency("EUR")
                 .withCountry("IE")
                 .withSettledByDate("2020-07-21")
-                .withSchemeId("654EB81FF7F07F7CF5A1EE3FF6972E90")
+                .withSchemeId(testData.getData(SCHEMEID))
                 .withMetadata(validInstructionMetadata)
                 .build();
     }
@@ -41,7 +45,7 @@ public class InstructionEngineer {
                     .withCurrency("EUR")
                     .withCountry("IE")
                     .withSettledByDate("2020-07-21")
-                    .withSchemeId("654EB81FF7F07F7CF5A1EE3FF6972E90")
+                    .withSchemeId(testData.getData(SCHEMEID))
                     .withMetadata(validInstructionMetadata)
                     .build();
         }

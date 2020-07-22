@@ -12,6 +12,7 @@ import net.serenitybdd.screenplay.actors.OnStage;
 import net.serenitybdd.screenplay.actors.OnlineCast;
 import net.thucydides.core.annotations.Steps;
 import net.thucydides.core.util.EnvironmentVariables;
+import net.thucydides.core.util.SystemEnvironmentVariables;
 import org.junit.Assert;
 import org.junit.runner.RunWith;
 import utilities.TestData;
@@ -41,11 +42,33 @@ public class BearerTokenStepDefinitions {
     @Before
     public void setTheStage() {
         OnStage.setTheStage(new OnlineCast());
-        RestAssured.baseURI = "https://sandbox-api.imbursepayments.com";
-
-        testData.setData(ACCOUNTID, environmentVariables.getProperty("accountid"));
-        testData.setData(TENANTID, environmentVariables.getProperty("tenantid"));
-        testData.setData(SCHEMEID, environmentVariables.getProperty("schemeid"));
+   //     String environment = environmentVariables.getProperty("environment");
+        EnvironmentVariables env = SystemEnvironmentVariables.createEnvironmentVariables();
+        String environment = env.getProperty("ENV");
+        switch (environment) {
+            case "qa":
+                RestAssured.baseURI = environmentVariables.getProperty("qaapiurl");
+                testData.setData(ACCOUNTID, environmentVariables.getProperty("qaaccountid"));
+                testData.setData(TENANTID, environmentVariables.getProperty("qatenantid"));
+                ;
+                testData.setData(PUBLICKEY, environmentVariables.getProperty("qapublickey"));
+                testData.setData(PRIVATEKEY, environmentVariables.getProperty("qaprivatekey"));
+                testData.setData(SCHEMEID, environmentVariables.getProperty("schemeid"));
+                break;
+            case "sandbox":
+                RestAssured.baseURI = environmentVariables.getProperty("sandboxurl");
+                testData.setData(ACCOUNTID, environmentVariables.getProperty("sandboxaccountid"));
+                testData.setData(TENANTID, environmentVariables.getProperty("sandboxtenantid"));
+                testData.setData(PUBLICKEY, environmentVariables.getProperty("sandboxpublickey"));
+                testData.setData(PRIVATEKEY, environmentVariables.getProperty("sandboxprivatekey"));
+                testData.setData(SCHEMEID, environmentVariables.getProperty("sandboxschemeid"));
+                break;
+        }
+//        RestAssured.baseURI = environmentVariables.getProperty("qaapiurl");
+//
+//        testData.setData(ACCOUNTID, environmentVariables.getProperty("accountid"));
+//        testData.setData(TENANTID, environmentVariables.getProperty("tenantid"));
+//        testData.setData(SCHEMEID, environmentVariables.getProperty("schemeid"));
     }
 
 
@@ -57,9 +80,15 @@ public class BearerTokenStepDefinitions {
 
     @When("he attempts to authenticate via the {string} endpoint")
     public void he_attempts_to_authenticate_via_the_endpoint(String endpoint) throws UnsupportedEncodingException {
-        setHmac(generatesHmac());
-        SerenityRest.given().log().all().queryParam("AccountId", accountId).queryParam("TenantId", tenantId)
-                .header("Authorization", "Hmac " + hmac).header("ContentType", "application/json")
+       String publicKey = testData.getData(PUBLICKEY);
+       String privateKey = testData.getData(PRIVATEKEY);
+        setHmac(generatesHmac(publicKey, privateKey));
+        SerenityRest.given().log().all()
+                //.queryParam("x-account-id", accountId).queryParam("x-tenant-id", tenantId)
+                .header("Authorization", "Hmac " + hmac)
+                .header("ContentType", "application/json")
+                .header("x-account-id", accountId)
+                .header("x-tenant-id", tenantId)
                 .body("")
                 .when()
                 .post(endpoint).then().statusCode(201);

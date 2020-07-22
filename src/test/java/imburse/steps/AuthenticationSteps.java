@@ -17,9 +17,9 @@ public class AuthenticationSteps {
     private EnvironmentVariables environmentVariables;
 
 
-    public static String generatesHmac() {
-        String publicKey = "bfaa9a45-5c5a-4bbc-b353-eb6989486c87";
-        String privateKey = "x7uNykwHN3F4ATXMqVcWcCqrc2PnNId7mZ0Ei6IfIMY=";
+    public static String generatesHmac(String publicKey, String privateKey) {
+     //   String publicKey = "060d457f-2d25-4757-8267-cce6541684ae";
+       // String privateKey = "vlObNvrqT0MoyuNxg1b53lSKjvtNyEy9VQl3eyz7rVA";
 
         byte[] privateKeyBytes = Base64.decodeBase64(privateKey);
         String bodySignature = "";

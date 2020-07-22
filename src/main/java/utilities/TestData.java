@@ -38,6 +38,8 @@ public class TestData {
         TENANTID,
         ACCESS_TOKEN,
         SCHEMEID,
+        PUBLICKEY,
+        PRIVATEKEY,
         EXPECTED_STATUS_CODE,
         EXPECTED_STATUS_CODE_MESSAGE,
         ORDER_REFERENCE,
