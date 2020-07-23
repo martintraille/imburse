@@ -1,23 +1,36 @@
 package imburse.model.request.order;
 
+import java.util.HashMap;
+import java.util.Map;
+
 public class Metadata {
-    private String key1;
+   // private String key1;
+    private Map<String, String> key1 = new HashMap<String, String>();
     private String key2;
     private String key3;
 
-    public Metadata(String key1, String key2, String key3) {
+
+
+    public Metadata(Map <String, String> key1, String key2, String key3) {
         this.key1 = key1;
+
+       // this.key1 = key1;
         this.key2 = key2;
         this.key3 = key3;
     }
 
-    public String getKey1() {
+  //  public String getKey1() { return key1; }
+
+    //public void setKey1(String key1) {this.key1 = key1;}
+
+    public Map<String, String> getKey1() {
         return key1;
     }
 
-    public void setKey1(String key1) {
+    public void setKey1(Map<String, String> key1) {
         this.key1 = key1;
     }
+
 
     public String getKey2() {
         return key2;
@@ -33,7 +46,8 @@ public class Metadata {
 
 
     public static final class MetadataBuilder {
-        private String key1;
+      //  private String key1;
+        private Map <String, String> key1 = new HashMap<String, String>();
         private String key2;
         private String key3;
 
@@ -44,8 +58,10 @@ public class Metadata {
             return new MetadataBuilder();
         }
 
-        public MetadataBuilder withKey1(String key1) {
+        public MetadataBuilder withKey1(Map<String,String> key1) {
+           // this.key1.put(key1);
             this.key1 = key1;
+          //  this.key1 = key1;
             return this;
         }
 

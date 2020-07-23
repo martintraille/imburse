@@ -9,7 +9,7 @@ Feature: Create an Order
     Given Picard has a valid accountId and tenantID
     When he attempts to authenticate via the '/v1/identity/hmac' endpoint
     Then he receives a bearer token
-
+@CHK
   Scenario: HAPPY PATH - create an order without instruction
     Given an 'order with no instruction'
     When a 'post' API call is made to the 'Create Order' endpoint
@@ -38,13 +38,13 @@ Feature: Create an Order
     Then a 202 response code is returned
     And a 'HTTP/1.1 202 Accepted' response message is returned
 
-  Scenario: NEGATIVE PATH - customer reference is mandatory
+  Scenario: NEGATIVE PATH - order reference is mandatory
     Given an 'order with an order reference of' ""
     When a 'post' API call is made to the 'Create Order' endpoint
     Then a 400 response code is returned
     And the error response will show "ORDER_REF_IS_REQUIRED"
 
-  Scenario: NEGATIVE PATH - customer reference cannot be longer than 50 characters
+  Scenario: NEGATIVE PATH - order reference cannot be longer than 50 characters
     Given an 'order with an order reference of 51 characters:' 'tqT39fIK8oHlTavsxe5lxFOqlvU51CYXOgsNjv4FQGtqDtr6o_Q'
     When a 'post' API call is made to the 'Create Order' endpoint
     Then a 400 response code is returned
