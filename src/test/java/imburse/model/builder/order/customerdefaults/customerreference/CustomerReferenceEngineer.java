@@ -5,6 +5,9 @@ import imburse.model.request.order.CustomerReference;
 import imburse.model.request.order.CustomerReferenceMetadata;
 import utilities.TestData;
 
+import java.util.HashMap;
+import java.util.Map;
+
 import static utilities.TestData.DataKeys.SCHEMEID;
 
 
@@ -17,12 +20,16 @@ public class CustomerReferenceEngineer {
 
     public CustomerReference generateValidCustomerReference() {
 
-     CustomerReferenceMetadata validCustRefMetadata = customerRefMetadataEngineer.generateCustRefMetadata();
+        Map<String, String> crmetadata = new HashMap<>();
+        crmetadata.put("Key100","Something");
+        crmetadata.put("key200","Something else");
+   //  CustomerReferenceMetadata validCustRefMetadata = customerRefMetadataEngineer.generateCustRefMetadata();
 
         return CustomerReference.CustomerReferenceBuilder.aCustomerReference()
                 .withFinancialInstrumentId("")
                 .withSchemeId(testData.getData(SCHEMEID))
-                .withCustomerReferenceMetadata(validCustRefMetadata)
+                .withMetadata(crmetadata)
+               // .withCustomerReferenceMetadata(validCustRefMetadata)
                 .build();
 
 

@@ -5,6 +5,9 @@ import imburse.model.request.order.Metadata;
 import imburse.utilities.Randomiser;
 import utilities.TestData;
 
+import java.util.HashMap;
+import java.util.Map;
+
 import static utilities.TestData.DataKeys.SCHEMEID;
 
 public class InstructionEngineer {
@@ -14,7 +17,7 @@ public class InstructionEngineer {
 
     public Instruction generateValidInstruction() {
 
-        Metadata validInstructionMetadata = instructionMetadataEngineer.generateValidInstructionMetadata();
+     //   Metadata validInstructionMetadata = instructionMetadataEngineer.generateValidInstructionMetadata();
 
 
         return Instruction.InstructionBuilder.anInstruction()
@@ -27,12 +30,12 @@ public class InstructionEngineer {
                 .withCountry("IE")
                 .withSettledByDate("2020-07-21")
                 .withSchemeId(testData.getData(SCHEMEID))
-                .withMetadata(validInstructionMetadata)
+                .withMetadata(generateValidInstructionMetadata())
                 .build();
     }
 
     public Instruction[] generateListOfInstructions(int noOfInstructions) {
-        Metadata validInstructionMetadata = instructionMetadataEngineer.generateValidInstructionMetadata();
+    //    Metadata validInstructionMetadata = instructionMetadataEngineer.generateValidInstructionMetadata();
 
         Instruction[] listOfInstructions = new Instruction[noOfInstructions];
         for (int i = 0; i < listOfInstructions.length; i++) {
@@ -46,7 +49,7 @@ public class InstructionEngineer {
                     .withCountry("IE")
                     .withSettledByDate("2020-07-21")
                     .withSchemeId(testData.getData(SCHEMEID))
-                    .withMetadata(validInstructionMetadata)
+                    .withMetadata(generateValidInstructionMetadata())
                     .build();
         }
 
@@ -56,7 +59,7 @@ public class InstructionEngineer {
 
     public Instruction generateInstructionWithBlankReference(String attribute) {
 
-        Metadata validInstructionMetadata = instructionMetadataEngineer.generateValidInstructionMetadata();
+      //  Metadata validInstructionMetadata = instructionMetadataEngineer.generateValidInstructionMetadata();
 
 
         return Instruction.InstructionBuilder.anInstruction()
@@ -69,8 +72,15 @@ public class InstructionEngineer {
                 .withCountry("IE")
                 .withSettledByDate("2020-07-21")
                 .withSchemeId("654EB81FF7F07F7CF5A1EE3FF6972E90")
-                .withMetadata(validInstructionMetadata)
+                .withMetadata(generateValidInstructionMetadata())
                 .build();
+    }
+
+    public Map<String,String> generateValidInstructionMetadata(){
+        Map<String, String> crmetadata = new HashMap<>();
+        crmetadata.put("Key100","Something");
+        crmetadata.put("key200","Something else");
+        return crmetadata;
     }
 
 }
