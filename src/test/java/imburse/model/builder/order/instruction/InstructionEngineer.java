@@ -1,10 +1,8 @@
 package imburse.model.builder.order.instruction;
 
 import imburse.model.request.order.Instruction;
-import imburse.model.request.order.Metadata;
 import imburse.utilities.Randomiser;
 import utilities.TestData;
-
 import java.util.HashMap;
 import java.util.Map;
 
@@ -12,13 +10,9 @@ import static utilities.TestData.DataKeys.SCHEMEID;
 
 public class InstructionEngineer {
 
-    InstructionMetadataEngineer instructionMetadataEngineer = new InstructionMetadataEngineer();
     private final TestData testData = new TestData();
 
     public Instruction generateValidInstruction() {
-
-     //   Metadata validInstructionMetadata = instructionMetadataEngineer.generateValidInstructionMetadata();
-
 
         return Instruction.InstructionBuilder.anInstruction()
                 .withInstructionRef("A123124516")
@@ -35,7 +29,6 @@ public class InstructionEngineer {
     }
 
     public Instruction[] generateListOfInstructions(int noOfInstructions) {
-    //    Metadata validInstructionMetadata = instructionMetadataEngineer.generateValidInstructionMetadata();
 
         Instruction[] listOfInstructions = new Instruction[noOfInstructions];
         for (int i = 0; i < listOfInstructions.length; i++) {
@@ -59,9 +52,6 @@ public class InstructionEngineer {
 
     public Instruction generateInstructionWithBlankReference(String attribute) {
 
-      //  Metadata validInstructionMetadata = instructionMetadataEngineer.generateValidInstructionMetadata();
-
-
         return Instruction.InstructionBuilder.anInstruction()
                 .withInstructionRef(attribute)
                 .withCustomerRef("13212412")
@@ -76,10 +66,10 @@ public class InstructionEngineer {
                 .build();
     }
 
-    public Map<String,String> generateValidInstructionMetadata(){
+    public Map<String, String> generateValidInstructionMetadata() {
         Map<String, String> crmetadata = new HashMap<>();
-        crmetadata.put("Key100","Something");
-        crmetadata.put("key200","Something else");
+        crmetadata.put("Key100", "Something");
+        crmetadata.put("key200", "Something else");
         return crmetadata;
     }
 

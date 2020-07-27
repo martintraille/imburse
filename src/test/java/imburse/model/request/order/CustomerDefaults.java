@@ -14,7 +14,6 @@ public class CustomerDefaults {
     }
 
 
-
     public static final class CustomerDefaultsBuilder {
         private CustomerReference custref1;
         private CustomerReference custref2;

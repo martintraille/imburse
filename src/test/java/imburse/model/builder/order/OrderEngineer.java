@@ -22,7 +22,6 @@ public class OrderEngineer {
     @Steps(shared = true)
     private final TestData testData = new TestData();
 
- //   MetadataEngineer metadataEngineer = new MetadataEngineer();
     CustomerDefaultsEngineer customerDefaultsEngineer = new CustomerDefaultsEngineer();
     InstructionEngineer instructionEngineer = new InstructionEngineer();
 
@@ -31,23 +30,18 @@ public class OrderEngineer {
         String generatedOrderref = Randomiser.customRandomAlphanumericString();
         testData.setData(ORDER_REFERENCE, generatedOrderref);
 
-
-    //    Metadata validMetaData = metadataEngineer.generateValidMetadata();
         CustomerDefaults validCustomerDefaults = customerDefaultsEngineer.generateValidCustomerDefaults();
 
 
         return Order.OrderBuilder.anOrder()
                 .withOrderRef(generatedOrderref)
                 .withMetadata(generateValidOrderMetadata())
-              //  .withMetadata(validMetaData)
                 .withCustomerDefaults(validCustomerDefaults).build();
     }
 
     public Order generatedOrderWithABlankOrderRef(String attribute) {
 
         testData.setData(ORDER_REFERENCE, attribute);
-
-   //     Metadata validMetaData = metadataEngineer.generateValidMetadata();
         CustomerDefaults validCustomerDefaults = customerDefaultsEngineer.generateValidCustomerDefaults();
 
 
@@ -64,7 +58,6 @@ public class OrderEngineer {
         testData.setData(ORDER_REFERENCE, generatedOrderref);
 
         Instruction generatedInstruction = instructionEngineer.generateValidInstruction();
-    //    Metadata generatedMetaData = metadataEngineer.generateValidMetadata();
         CustomerDefaults generatedCustomerDefaults = customerDefaultsEngineer.generateValidCustomerDefaults();
 
 
@@ -81,7 +74,6 @@ public class OrderEngineer {
         testData.setData(ORDER_REFERENCE, attribute);
         Instruction generatedInstruction;
         generatedInstruction = instructionEngineer.generateValidInstruction();
-    //    Metadata generatedMetaData = metadataEngineer.generateValidMetadata();
         CustomerDefaults generatedCustomerDefaults = customerDefaultsEngineer.generateValidCustomerDefaults();
 
 
@@ -94,7 +86,6 @@ public class OrderEngineer {
 
     public Order generateOrderWithAnAlphaNumericOrderReference(String attribute) {
         Instruction generatedInstruction = instructionEngineer.generateValidInstruction();
-  //      Metadata generatedMetaData = metadataEngineer.generateValidMetadata();
         CustomerDefaults generatedCustomerDefaults = customerDefaultsEngineer.generateValidCustomerDefaults();
 
 
@@ -108,7 +99,6 @@ public class OrderEngineer {
     public Order generateOrderWith50CharOrderRef() {
         String generatedOrderRef = Randomiser.customRandomAlphanumericString(50);
         Instruction generatedInstruction = instructionEngineer.generateValidInstruction();
-   //     Metadata generatedMetaData = metadataEngineer.generateValidMetadata();
         CustomerDefaults generatedCustomerDefaults = customerDefaultsEngineer.generateValidCustomerDefaults();
 
 
@@ -125,8 +115,6 @@ public class OrderEngineer {
 
         Instruction generatedInstruction;
         generatedInstruction = instructionEngineer.generateValidInstruction();
-    //    Metadata generatedMetaData;
-      //  generatedMetaData = metadataEngineer.generateValidMetadata();
         CustomerDefaults generatedCustomerDefaults = customerDefaultsEngineer.generateValidCustomerDefaults();
 
 
@@ -140,12 +128,10 @@ public class OrderEngineer {
     }
 
     public Order generateOrderWith101MetadataValueCharacters() {
-     //   String metadataValue = Randomiser.customRandomAlphanumericString(101);
         String generatedOrderref = Randomiser.customRandomAlphanumericString();
         testData.setData(ORDER_REFERENCE, generatedOrderref);
 
         Instruction generatedInstruction = instructionEngineer.generateValidInstruction();
-     //   Metadata generatedMetaData = metadataEngineer.generateMetadataWith101CharValue(metadataValue);
         CustomerDefaults generatedCustomerDefaults = customerDefaultsEngineer.generateValidCustomerDefaults();
 
 
@@ -165,7 +151,6 @@ public class OrderEngineer {
 
 
         Instruction[] generatedInstruction = instructionEngineer.generateListOfInstructions(noOfInstructions);
-   //     Metadata generatedMetaData = metadataEngineer.generateValidMetadata();
         CustomerDefaults generatedCustomerDefaults = customerDefaultsEngineer.generateValidCustomerDefaults();
 
 
@@ -176,10 +161,10 @@ public class OrderEngineer {
                 .withCustomerDefaults(generatedCustomerDefaults).build();
     }
 
-    public Map<String,String> generateValidOrderMetadata(){
+    public Map<String, String> generateValidOrderMetadata() {
         Map<String, String> crmetadata = new HashMap<>();
-        crmetadata.put("Key100","Something");
-        crmetadata.put("key200","Something else");
+        crmetadata.put("Key1", "Something");
+        crmetadata.put("key2", "Something else");
         return crmetadata;
     }
 
