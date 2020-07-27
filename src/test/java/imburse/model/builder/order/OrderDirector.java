@@ -13,7 +13,9 @@ public class OrderDirector implements OrderPlan {
     }
 
     @Override
-    public Order anOrderWithABlankOrderRef(String attribute) { return orderEngineer.generatedOrderWithABlankOrderRef(attribute); }
+    public Order anOrderWithABlankOrderRef(String attribute) {
+        return orderEngineer.generatedOrderWithABlankOrderRef(attribute);
+    }
 
     @Override
     public Order anOrderWithAnInstruction() {

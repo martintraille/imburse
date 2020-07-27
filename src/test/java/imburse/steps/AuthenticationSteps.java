@@ -6,11 +6,11 @@ import net.thucydides.core.util.EnvironmentVariables;
 import org.apache.commons.codec.binary.Base64;
 import org.apache.commons.codec.digest.HmacAlgorithms;
 import org.apache.commons.codec.digest.HmacUtils;
+
 import java.nio.charset.StandardCharsets;
 import java.util.Date;
 
 import static net.serenitybdd.rest.SerenityRest.lastResponse;
-
 
 public class AuthenticationSteps {
 
@@ -18,9 +18,6 @@ public class AuthenticationSteps {
 
 
     public static String generatesHmac(String publicKey, String privateKey) {
-     //   String publicKey = "060d457f-2d25-4757-8267-cce6541684ae";
-       // String privateKey = "vlObNvrqT0MoyuNxg1b53lSKjvtNyEy9VQl3eyz7rVA";
-
         byte[] privateKeyBytes = Base64.decodeBase64(privateKey);
         String bodySignature = "";
         long timestamp = new Date().getTime() / 1000;
@@ -40,11 +37,9 @@ public class AuthenticationSteps {
         return hmac;
     }
 
-
     public String getResponseBody() {
         return lastResponse().getBody().asString();
     }
-
 
     public String getAccessToken() {
         return SerenityRest.lastResponse().jsonPath().getString("accessToken");

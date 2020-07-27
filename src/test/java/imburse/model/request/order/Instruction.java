@@ -1,5 +1,7 @@
 package imburse.model.request.order;
 
+import java.util.Map;
+
 public class Instruction {
     private String instructionRef;
     private String customerRef;
@@ -10,13 +12,10 @@ public class Instruction {
     private String country;
     private String settledByDate;
     private String schemeId;
-
-
-
-    private Metadata metadata;
+    private Map<String, String> metadata;
 
     public Instruction(String instructionRef, String customerRef, String direction, String financialInstrumentId, String amount, String currency,
-                       String country, String settledByDate, String schemeId, Metadata metadata) {
+                       String country, String settledByDate, String schemeId, Map<String, String> metadata) {
         this.instructionRef = instructionRef;
         this.customerRef = customerRef;
         this.direction = direction;
@@ -30,14 +29,13 @@ public class Instruction {
 
     }
 
-    public Metadata getMetadata() {
+    public Map<String, String> getMetadata() {
         return metadata;
     }
 
-    public void setMetadata(Metadata metadata) {
+    public void setMetadata(Map<String, String> metadata) {
         this.metadata = metadata;
     }
-
 
     public static final class InstructionBuilder {
         private String instructionRef;
@@ -49,7 +47,7 @@ public class Instruction {
         private String country;
         private String settledByDate;
         private String schemeId;
-        private Metadata metadata;
+        private Map<String, String> metadata;
 
         private InstructionBuilder() {
         }
@@ -103,7 +101,7 @@ public class Instruction {
             return this;
         }
 
-        public InstructionBuilder withMetadata(Metadata metadata) {
+        public InstructionBuilder withMetadata(Map<String, String> metadata) {
             this.metadata = metadata;
             return this;
         }
