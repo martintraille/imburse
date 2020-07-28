@@ -10,33 +10,48 @@ Feature: Create an Order
     When he attempts to authenticate via the '/v1/identity/hmac' endpoint
     Then he receives a bearer token
 
-  Scenario: HAPPY PATH - create an order without instruction
+  Scenario: Create an order without instruction
     Given an 'order with no instruction'
     When a 'post' API call is made to the 'Create Order' endpoint
     Then the order is successfully created
 
-  Scenario: HAPPY PATH - create an order with an instruction
+  Scenario: Create an order with an instruction
     Given an 'order with an instruction'
     When a 'post' API call is made to the 'Create Order' endpoint
     Then the order is successfully created
 
-  Scenario: HAPPY PATH - order reference can contain (.dot) -(dash) _(underscore)
+  Scenario: Order reference can contain (.dot) -(dash) _(underscore)
     Given an 'order with an alphanumeric order reference of' 'RaNdOmAlPhANuMeRiC._-'
     When a 'post' API call is made to the 'Create Order' endpoint
     Then a 202 response code is returned
     And a 'HTTP/1.1 202 Accepted' response message is returned
 
-  Scenario: HAPPY PATH - order reference can be up to 50 characters
+  Scenario: Order reference can be up to 50 characters
     Given an 'order with an order reference of 50 alphanumeric characters'
     When a 'post' API call is made to the 'Create Order' endpoint
     Then a 202 response code is returned
     And a 'HTTP/1.1 202 Accepted' response message is returned
 
-  Scenario: HAPPY PATH - Order can contain up to 100 instructions only
+  Scenario: Order can contain up to 100 instructions only
     Given an 'order with total number of instructions' '100'
     When a 'post' API call is made to the 'Create Order' endpoint
     Then a 202 response code is returned
     And a 'HTTP/1.1 202 Accepted' response message is returned
+
+  @MART
+  Scenario: NEGATIVE PATH - Order cannot have duplicate metadata keys
+    Given an 'order with duplicate metadata keys'
+    When a 'post' API call is made to the 'Create Order' endpoint
+    Then a 202 response code is returned
+    And a 'HTTP/1.1 202 Accepted' response message is returned
+
+  @BUGFOUND
+  Scenario: Order metadata key can be up to 100 characters
+    Given an 'order with metadata key length of' '100'
+    When a 'post' API call is made to the 'Create Order' endpoint
+    Then a 202 response code is returned
+    And a 'HTTP/1.1 202 Accepted' response message is returned
+
 
   Scenario: NEGATIVE PATH - customer reference is mandatory
     Given an 'order with an order reference of' ""
@@ -61,7 +76,7 @@ Feature: Create an Order
 
   @BUGFOUND
   Scenario: NEGATIVE PATH - Order metadata value cannot be over 100 characters
-    Given an 'order with metadata value of 101 characters'
+    Given an 'order with metadata value length of' '101'
     When a 'post' API call is made to the 'Create Order' endpoint
     Then a 400 response code is returned
     And the error response will show "SOME ERROR"
@@ -72,4 +87,6 @@ Feature: Create an Order
     When a 'post' API call is made to the 'Create Order' endpoint
     Then a 400 response code is returned
     And the error response will show "SOME ERROR"
+
+
 

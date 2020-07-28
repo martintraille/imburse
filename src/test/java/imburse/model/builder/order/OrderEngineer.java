@@ -5,14 +5,13 @@ import imburse.model.builder.order.instruction.InstructionEngineer;
 import imburse.model.request.order.CustomerDefaults;
 import imburse.model.request.order.Instruction;
 import imburse.model.request.order.Order;
+import imburse.utilities.MetadataGenerator;
 import imburse.utilities.Randomiser;
 import net.thucydides.core.annotations.Steps;
 import utilities.TestData;
 
 import java.util.Arrays;
 import java.util.Collections;
-import java.util.HashMap;
-import java.util.Map;
 
 import static utilities.TestData.DataKeys.ORDER_REFERENCE;
 
@@ -24,6 +23,7 @@ public class OrderEngineer {
 
     CustomerDefaultsEngineer customerDefaultsEngineer = new CustomerDefaultsEngineer();
     InstructionEngineer instructionEngineer = new InstructionEngineer();
+    MetadataGenerator metadataGenerator = new MetadataGenerator();
 
 
     public Order generatedOrderWithNoInstruction() {
@@ -35,7 +35,7 @@ public class OrderEngineer {
 
         return Order.OrderBuilder.anOrder()
                 .withOrderRef(generatedOrderref)
-                .withMetadata(generateValidOrderMetadata())
+                .withMetadata(metadataGenerator.generateOrderMetadata())
                 .withCustomerDefaults(validCustomerDefaults).build();
     }
 
@@ -47,7 +47,7 @@ public class OrderEngineer {
 
         return Order.OrderBuilder.anOrder()
                 .withOrderRef(attribute)
-                .withMetadata(generateValidOrderMetadata())
+                .withMetadata(metadataGenerator.generateOrderMetadata())
                 .withCustomerDefaults(validCustomerDefaults).build();
 
     }
@@ -64,7 +64,7 @@ public class OrderEngineer {
         return Order.OrderBuilder.anOrder()
                 .withOrderRef(generatedOrderref)
                 .withInstructions(Collections.singletonList(generatedInstruction))
-                .withMetadata(generateValidOrderMetadata())
+                .withMetadata(metadataGenerator.generateOrderMetadata())
                 .withCustomerDefaults(generatedCustomerDefaults).build();
 
 
@@ -80,7 +80,7 @@ public class OrderEngineer {
         return Order.OrderBuilder.anOrder()
                 .withOrderRef(attribute)
                 .withInstructions(Collections.singletonList(generatedInstruction))
-                .withMetadata(generateValidOrderMetadata())
+                .withMetadata(metadataGenerator.generateOrderMetadata())
                 .withCustomerDefaults(generatedCustomerDefaults).build();
     }
 
@@ -92,7 +92,7 @@ public class OrderEngineer {
         return Order.OrderBuilder.anOrder()
                 .withOrderRef(attribute)
                 .withInstructions(Collections.singletonList(generatedInstruction))
-                .withMetadata(generateValidOrderMetadata())
+                .withMetadata(metadataGenerator.generateOrderMetadata())
                 .withCustomerDefaults(generatedCustomerDefaults).build();
     }
 
@@ -105,7 +105,7 @@ public class OrderEngineer {
         return Order.OrderBuilder.anOrder()
                 .withOrderRef(generatedOrderRef)
                 .withInstructions(Collections.singletonList(generatedInstruction))
-                .withMetadata(generateValidOrderMetadata())
+                .withMetadata(metadataGenerator.generateOrderMetadata())
                 .withCustomerDefaults(generatedCustomerDefaults).build();
 
     }
@@ -121,24 +121,7 @@ public class OrderEngineer {
         return Order.OrderBuilder.anOrder()
                 .withOrderRef(duplicateOrderRef)
                 .withInstructions(Collections.singletonList(generatedInstruction))
-                .withMetadata(generateValidOrderMetadata())
-                .withCustomerDefaults(generatedCustomerDefaults).build();
-
-
-    }
-
-    public Order generateOrderWith101MetadataValueCharacters() {
-        String generatedOrderref = Randomiser.customRandomAlphanumericString();
-        testData.setData(ORDER_REFERENCE, generatedOrderref);
-
-        Instruction generatedInstruction = instructionEngineer.generateValidInstruction();
-        CustomerDefaults generatedCustomerDefaults = customerDefaultsEngineer.generateValidCustomerDefaults();
-
-
-        return Order.OrderBuilder.anOrder()
-                .withOrderRef(generatedOrderref)
-                .withInstructions(Collections.singletonList(generatedInstruction))
-                .withMetadata(generateValidOrderMetadata())
+                .withMetadata(metadataGenerator.generateOrderMetadata())
                 .withCustomerDefaults(generatedCustomerDefaults).build();
 
 
@@ -157,15 +140,52 @@ public class OrderEngineer {
         return Order.OrderBuilder.anOrder()
                 .withOrderRef(generatedOrderref)
                 .withInstructions(Arrays.asList(generatedInstruction))
-                .withMetadata(generateValidOrderMetadata())
+                .withMetadata(metadataGenerator.generateOrderMetadata())
                 .withCustomerDefaults(generatedCustomerDefaults).build();
     }
 
-    public Map<String, String> generateValidOrderMetadata() {
-        Map<String, String> crmetadata = new HashMap<>();
-        crmetadata.put("Key1", "Something");
-        crmetadata.put("key2", "Something else");
-        return crmetadata;
+
+    public Order generateAnOrderWithCustomMetadataKeyLength(int customNumber) {
+        String generatedOrderRef = Randomiser.customRandomAlphanumericString();
+        testData.setData(ORDER_REFERENCE, generatedOrderRef);
+        String generatedMetadataKey = Randomiser.customRandomAlphanumericString(customNumber);
+        Instruction generatedInstruction = instructionEngineer.generateValidInstruction();
+        CustomerDefaults generatedCustomerDefaults = customerDefaultsEngineer.generateValidCustomerDefaults();
+
+        return Order.OrderBuilder.anOrder()
+                .withOrderRef(generatedOrderRef)
+                .withInstructions(Collections.singletonList(generatedInstruction))
+                .withMetadata(metadataGenerator.generateOrderMetadata(generatedMetadataKey))
+                .withCustomerDefaults(generatedCustomerDefaults).build();
+    }
+
+    public Order generateAnOrderWithCustomerMetadataValueLength(int customNumber) {
+        String generatedOrderRef = Randomiser.customRandomAlphanumericString();
+        testData.setData(ORDER_REFERENCE, generatedOrderRef);
+        String generatedMetadataValue = Randomiser.customRandomAlphanumericString(customNumber);
+        Instruction generatedInstruction = instructionEngineer.generateValidInstruction();
+        CustomerDefaults generatedCustomerDefaults = customerDefaultsEngineer.generateValidCustomerDefaults();
+
+        return Order.OrderBuilder.anOrder()
+                .withOrderRef(generatedOrderRef)
+                .withInstructions(Collections.singletonList(generatedInstruction))
+                .withMetadata(metadataGenerator.generateOrderMetadataWithCustomValue(generatedMetadataValue))
+                .withCustomerDefaults(generatedCustomerDefaults).build();
+
+    }
+
+    public Order generateAnOrderWithDuplicatedMetadataKeys() {
+
+        String generatedOrderRef = Randomiser.customRandomAlphanumericString();
+        testData.setData(ORDER_REFERENCE, generatedOrderRef);
+        Instruction generatedInstruction = instructionEngineer.generateValidInstruction();
+        CustomerDefaults generatedCustomerDefaults = customerDefaultsEngineer.generateValidCustomerDefaults();
+
+        return Order.OrderBuilder.anOrder()
+                .withOrderRef(generatedOrderRef)
+                .withInstructions(Collections.singletonList(generatedInstruction))
+                .withMetadata(metadataGenerator.generateDuplicateMetadata())
+                .withCustomerDefaults(generatedCustomerDefaults).build();
     }
 
 }

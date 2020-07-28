@@ -18,9 +18,13 @@ public interface OrderPlan {
 
     Order anOrderWithADuplicateOrderReference();
 
-    Order anOrderWith101MetadataValueCharacters();
-
     Order anOrderContainingCustomNoOfInstructions(int customNumber);
+
+    Order anOrderWithCustomMetadataKeyLength (int customNumber);
+
+    Order anOrderWithCustomMetadataValueLength (int customNumber);
+
+    Order anOrderWithDuplicatedMetadataKeys();
 
 
 }

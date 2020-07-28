@@ -68,16 +68,14 @@ public class OrderManagementStepDefinitions {
 
                 break;
 
-            case "order with metadata value of 101 characters":
-                setGeneratedOrder(orderDirector.anOrderWith101MetadataValueCharacters());
-
-                break;
-
             case "existing order with no instruction":
                 testData.setData(SCENARIO, scenario);
                 setGeneratedOrder(orderDirector.anOrderWithNoInstruction());
 
                 break;
+
+            case "order with duplicate metadata keys":
+                setGeneratedOrder(orderDirector.anOrderWithDuplicatedMetadataKeys());
 
             case "Instruction is created":
                 setGeneratedInstruction(instructionDirector.aValidInstruction());
@@ -109,6 +107,17 @@ public class OrderManagementStepDefinitions {
 
                 break;
 
+            case "order with metadata key length of":
+                int metadataKeyLength = Integer.parseInt(attribute);
+                setGeneratedOrder(orderDirector.anOrderWithCustomMetadataKeyLength(metadataKeyLength));
+
+                break;
+
+            case "order with metadata value length of":
+                int metadataValueLength = Integer.parseInt(attribute);
+                setGeneratedOrder(orderDirector.anOrderWithCustomMetadataValueLength(metadataValueLength));
+
+                break;
             case "instruction is created with an instruction reference of":
                 setGeneratedInstruction(instructionDirector.anInstructionWithABlankReference(attribute));
 
