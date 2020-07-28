@@ -41,15 +41,24 @@ public class OrderDirector implements OrderPlan {
     public Order anOrderWithADuplicateOrderReference() {
         return orderEngineer.generateOrderWithADuplicateOrderReference();
     }
-
-    @Override
-    public Order anOrderWith101MetadataValueCharacters() {
-        return orderEngineer.generateOrderWith101MetadataValueCharacters();
-    }
-
     @Override
     public Order anOrderContainingCustomNoOfInstructions(int noOfInstructions) {
         return orderEngineer.generateAnOrderWithCustomNoOfInstructions(noOfInstructions);
+    }
+
+    @Override
+    public Order anOrderWithCustomMetadataKeyLength(int customNumber) {
+       return orderEngineer.generateAnOrderWithCustomMetadataKeyLength(customNumber);
+    }
+
+    @Override
+    public Order anOrderWithCustomMetadataValueLength(int customNumber) {
+       return orderEngineer.generateAnOrderWithCustomerMetadataValueLength(customNumber);
+    }
+
+    @Override
+    public Order anOrderWithDuplicatedMetadataKeys() {
+        return orderEngineer.generateAnOrderWithDuplicatedMetadataKeys();
     }
 
 
