@@ -1,0 +1,6 @@
+steps:
+  - run: "mvn clean verify -DENV=qa -Dwebdriver.driver=chrome"
+  - run:
+      command: |
+        echo "Arbitrary multi-line bash"
+        echo "Copy-paste from 'Execute Shell' in Jenkins"

@@ -142,7 +142,7 @@ public class OrderManagementStepDefinitions {
 
             case "Create Instruction":
 
-                String api = "/v1/order-management/" + generatedOrderref + "/features/api/instruction";
+                String api = "/v1/order-management/" + generatedOrderref + "/instruction";
                 SerenityRest.given().log().all()
                         .header("Authorization", accessToken)
                         .header("x-account-id", accountId)
