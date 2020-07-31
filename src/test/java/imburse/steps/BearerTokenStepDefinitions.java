@@ -78,8 +78,8 @@ public class BearerTokenStepDefinitions {
         setTenantId(testData.getData(TENANTID));
     }
 
-    @When("he attempts to authenticate via the {string} endpoint")
-    public void he_attempts_to_authenticate_via_the_endpoint(String endpoint) throws UnsupportedEncodingException {
+    @When("he attempts to authenticate via the {string} {string} endpoint")
+    public void he_attempts_to_authenticate_via_the_endpoint(String apiversion, String endpoint) throws UnsupportedEncodingException {
        String publicKey = testData.getData(PUBLICKEY);
        String privateKey = testData.getData(PRIVATEKEY);
         setHmac(generatesHmac(publicKey, privateKey));
@@ -91,7 +91,7 @@ public class BearerTokenStepDefinitions {
                 .header("x-tenant-id", tenantId)
                 .body("")
                 .when()
-                .post(endpoint).then().statusCode(201);
+                .post(apiversion + endpoint).then().statusCode(201);
     }
 
     @Then("he receives a bearer token")
