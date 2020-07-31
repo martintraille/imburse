@@ -7,15 +7,15 @@ Feature: Create an Instruction
 
   Background:
     Given Picard has a valid accountId and tenantID
-    When he attempts to authenticate via the '/v1/identity/hmac' endpoint
+    When he attempts to authenticate via the 'v1' '/identity/hmac' endpoint
     Then he receives a bearer token
 
   Scenario: HAPPY PATH - Create an Instruction on an existing order
     Given an 'order with no instruction'
-    And a 'post' API call is made to the 'Create Order' endpoint
+    And a 'post' API call is made to the 'v1' 'Create Order' endpoint
     And the order is successfully created
     And an 'Instruction is created'
-    When a 'post' API call is made to the 'Create Instruction' endpoint
+    When a 'post' API call is made to the 'v1' 'Create Instruction' endpoint
     Then the instruction has been created successfully
 
 # TO IMPLEMENT

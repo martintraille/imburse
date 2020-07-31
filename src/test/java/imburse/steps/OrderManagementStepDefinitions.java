@@ -131,8 +131,8 @@ public class OrderManagementStepDefinitions {
 
     }
 
-    @When("a {string} API call is made to the {string} endpoint")
-    public void a_API_call_is_made_to_the_endpoint(String requestType, String endpoint) {
+    @When("a {string} API call is made to the {string} {string} endpoint")
+    public void a_API_call_is_made_to_the_endpoint(String requestType, String apiversion, String endpoint) {
         String accountId = testData.getData(ACCOUNTID);
         String tenantId = testData.getData(TENANTID);
         String accessToken = testData.getData(ACCESS_TOKEN);
@@ -142,7 +142,7 @@ public class OrderManagementStepDefinitions {
 
             case "Create Instruction":
 
-                String api = "/v1/order-management/" + generatedOrderref + "/instruction";
+                String api = apiversion + "/order-management/" + generatedOrderref + "/instruction";
                 SerenityRest.given().log().all()
                         .header("Authorization", accessToken)
                         .header("x-account-id", accountId)
@@ -154,7 +154,7 @@ public class OrderManagementStepDefinitions {
                 break;
 
             case "Create Order":
-                api = "/v1/order-management/";
+                api = apiversion + "/order-management/";
                 SerenityRest.given().log().all()
                         .header("Authorization", accessToken)
                         .header("x-account-id", accountId)
