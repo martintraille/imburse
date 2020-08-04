@@ -1,5 +1,6 @@
-Feature: Logging in to the Imburse Account Platform
 
+Feature: Logging in to the Imburse Account Platform
+  @MARTIN
   Scenario: Logging into the Imburse Account portal
   Given 'Picard' is on the Imburse Account login page
   When he submits his login credentials
