@@ -11,4 +11,9 @@ public class AccountPortalLandingPage extends PageObject {
             .located(By.className("_2gprPp5XTH1PVd5mQcJYc1"));
     public static final Target CURRENT_ACCOUNT_NAME = Target.the("Current Account Name")
             .located(By.cssSelector("._1_1mcVwHpRkzmNtR9eW64J"));
+    public static final Target SWITCH_ACCOUNTS = Target.the("Switch Accounts Toggle")
+        .located(By.cssSelector("._2BFNdb0NPFiIC5N5MHS9s2"));
+    public static final Target AUTOMATION_TEST_ACCOUNT = Target.the("Automation Test Account")
+            .located(By.cssSelector("._2BFNdb0NPFiIC5N5MHS9s2._2G8x089G7OH8silGgmSq9z"));
+
 }
