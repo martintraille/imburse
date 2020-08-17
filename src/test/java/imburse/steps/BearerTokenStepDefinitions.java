@@ -48,9 +48,9 @@ public class BearerTokenStepDefinitions {
         switch (environment) {
             case "qa":
                 RestAssured.baseURI = environmentVariables.getProperty("qaapiurl");
+                testData.setData(BASE_URL,environmentVariables.getProperty("qaapiurl"));
                 testData.setData(ACCOUNTID, environmentVariables.getProperty("qaaccountid"));
                 testData.setData(TENANTID, environmentVariables.getProperty("qatenantid"));
-                ;
                 testData.setData(PUBLICKEY, environmentVariables.getProperty("qapublickey"));
                 testData.setData(PRIVATEKEY, environmentVariables.getProperty("qaprivatekey"));
                 testData.setData(SCHEMEID, environmentVariables.getProperty("schemeid"));
@@ -77,6 +77,8 @@ public class BearerTokenStepDefinitions {
         setAccountId(testData.getData(ACCOUNTID));
         setTenantId(testData.getData(TENANTID));
     }
+
+
 
     @When("he attempts to authenticate via the {string} {string} endpoint")
     public void he_attempts_to_authenticate_via_the_endpoint(String apiversion, String endpoint) throws UnsupportedEncodingException {
@@ -113,7 +115,6 @@ public class BearerTokenStepDefinitions {
     public void setHmac(String hmac) {
         this.hmac = hmac;
     }
-
 
     public void setAccountId(String accountId) {
         this.accountId = accountId;

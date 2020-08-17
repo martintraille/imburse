@@ -39,6 +39,13 @@ public class Login implements Task {
         return Instrumented.instanceOf(Login.class).newInstance();
     }
 
+    public static Performable withMandateNotEnabledTenantCredentials() {
+        final TestData testData = new TestData();
+        emailAddress = testData.getData(ACCOUNT_PORTAL_EMAIL_ADDRESS);
+        password = testData.getData(ACCOUNT_PORTAL_PASSWORD);
+        return Instrumented.instanceOf(Login.class).newInstance();
+    }
+
 
     @Override
     @Step("{0} enters their email address and password account credentials")
@@ -53,6 +60,7 @@ public class Login implements Task {
         actor.attemptsTo(
                 Click.on(AccountLoginPage.SUBMIT_BUTTON));
     }
+
 
 
 }

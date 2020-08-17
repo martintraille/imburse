@@ -33,12 +33,14 @@ public class TestData {
     }
 
     public enum DataKeys {
+        BASE_URL,
         ACCOUNT_PORTAL_URL,
         TENANT_PORTAL_URL,
         TENANT_PORTAL_EMAIL_ADDRESS,
         TENANT_PORTAL_PASSWORD,
         ACCOUNT_PORTAL_EMAIL_ADDRESS,
         ACCOUNT_PORTAL_PASSWORD,
+        OPS_PORTAL_URL,
         SCENARIO,
         ACCOUNTID,
         TENANTID,
