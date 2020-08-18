@@ -55,6 +55,17 @@ public class BearerTokenStepDefinitions {
                 testData.setData(PRIVATEKEY, environmentVariables.getProperty("qaprivatekey"));
                 testData.setData(SCHEMEID, environmentVariables.getProperty("schemeid"));
                 break;
+
+            case "ci":
+                RestAssured.baseURI = environmentVariables.getProperty("ciapiurl");
+                testData.setData(ACCOUNTID, environmentVariables.getProperty("ciaccountid"));
+                testData.setData(TENANTID, environmentVariables.getProperty("citenantid"));
+                ;
+                testData.setData(PUBLICKEY, environmentVariables.getProperty("cipublickey"));
+                testData.setData(PRIVATEKEY, environmentVariables.getProperty("ciprivatekey"));
+                testData.setData(SCHEMEID, environmentVariables.getProperty("cischemeid"));
+                break;
+
             case "sandbox":
                 RestAssured.baseURI = environmentVariables.getProperty("sandboxurl");
                 testData.setData(ACCOUNTID, environmentVariables.getProperty("sandboxaccountid"));

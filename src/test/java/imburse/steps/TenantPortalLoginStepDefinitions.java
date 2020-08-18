@@ -59,6 +59,10 @@ public class TenantPortalLoginStepDefinitions {
         OnStage.theActorCalled(actorName).attemptsTo(Navigate.toTheTenantPortalLoginPage());
     }
 
+    @When("he logs into the tenant portal using his tenant portal credentials")
+    public void he_logs_into_the_tenant_portal_using_his_tenant_portal_credentials() {
+        OnStage.theActorInTheSpotlight().attemptsTo(Login.withAccountWithSingleTenantCredentials());
+    }
 
     @Then("he is automatically routed to the tenant landing page")
     public void he_is_automatically_routed_to_the_tenant_landing_page() {

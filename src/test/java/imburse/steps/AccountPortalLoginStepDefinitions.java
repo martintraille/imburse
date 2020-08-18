@@ -9,6 +9,7 @@ import io.cucumber.java.en.Then;
 import io.cucumber.java.en.When;
 import net.serenitybdd.screenplay.actors.OnStage;
 import net.serenitybdd.screenplay.actors.OnlineCast;
+import net.thucydides.core.annotations.Steps;
 import net.thucydides.core.util.EnvironmentVariables;
 import utilities.TestData;
 
@@ -18,6 +19,8 @@ import static utilities.TestData.DataKeys.*;
 import static utilities.TestData.DataKeys.TENANT_PORTAL_PASSWORD;
 
 public class AccountPortalLoginStepDefinitions {
+
+
 
     private final TestData testData = new TestData();
     private EnvironmentVariables environmentVariables;
@@ -31,7 +34,7 @@ public class AccountPortalLoginStepDefinitions {
     }
 
     @Given("{string} is on the Imburse Account login page")
-    public void picard_is_on_the_Imburse_Account_login_page(String actorName) {
+    public void is_on_the_Imburse_Account_login_page(String actorName) {
         OnStage.theActorCalled(actorName).attemptsTo(Navigate.toTheImburseAccountLoginPage());
     }
 

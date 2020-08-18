@@ -45,7 +45,7 @@ Feature: Create an Order
     Then a 202 response code is returned
     And a 'HTTP/1.1 202 Accepted' response message is returned
 
-  @BUGFOUND
+  @PROD-107
   Scenario: Order metadata key can be up to 100 characters
     Given an 'order with metadata key length of' '100'
     When a 'post' API call is made to the 'v1' 'Create Order' endpoint
@@ -74,14 +74,14 @@ Feature: Create an Order
     Then a 400 response code is returned
     And the error response will show "ORDER_ALREADY_EXISTS"
 
-  @BUGFOUND
+  @PROD-106
   Scenario: NEGATIVE PATH - Order metadata value cannot be over 100 characters
     Given an 'order with metadata value length of' '101'
     When a 'post' API call is made to the 'v1' 'Create Order' endpoint
     Then a 400 response code is returned
     And the error response will show "SOME ERROR"
 
-  @BUGFOUND
+  @PROD-108
   Scenario: NEGATIVE PATH - Order cannot contain more than 100 instructions
     Given an 'order with total number of instructions' '101'
     When a 'post' API call is made to the 'v1' 'Create Order' endpoint
