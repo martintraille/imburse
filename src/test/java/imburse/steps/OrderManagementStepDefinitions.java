@@ -2,6 +2,7 @@ package imburse.steps;
 
 import imburse.model.builder.order.instruction.InstructionDirector;
 import imburse.model.builder.order.OrderDirector;
+import imburse.model.request.financialinstrumentcreation.FinancialInstrumentMobile;
 import imburse.model.request.order.Instruction;
 import imburse.model.request.order.Order;
 import imburse.model.response.error.ErrorMessage;
@@ -35,9 +36,15 @@ public class OrderManagementStepDefinitions {
     private Randomiser randomiser;
     private String createInstructionResponse;
     private String orderResponse;
+    private FinancialInstrumentMobile generatedFIMobile;
 
     @Steps(shared = true)
     AuthenticationSteps registeredUser;
+
+    @Steps(shared = true)
+    CustomerVaultStepDefinitions customerVaultStepDefinitions;
+
+
 
     @Given("an {string}")
     public void an(String scenario) {
@@ -164,6 +171,21 @@ public class OrderManagementStepDefinitions {
                         .when()
                         .post(api);
                 break;
+
+
+            case "Create financial instrument mobile":
+                FinancialInstrumentMobile generatedFIStuff;
+                generatedFIStuff = customerVaultStepDefinitions.getFinancialInstrumentMobile();
+                 api = apiversion + "/customer-vault/1234567/mobile";
+                SerenityRest.given().log().all()
+                        .header("Authorization", accessToken)
+                        .header("x-account-id", accountId)
+                        .header("x-tenant-id", tenantId)
+                        .header("Content-Type", "application/json")
+                        .body(generatedFIStuff)
+                        .when()
+                        .post(api);
+                break;
         }
     }
 
@@ -219,4 +241,8 @@ public class OrderManagementStepDefinitions {
         this.orderResponse = orderResponse;
     }
 
+
+
 }
+
+
