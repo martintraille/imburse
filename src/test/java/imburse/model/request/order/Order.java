@@ -4,7 +4,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-public class Order {
+public class Order implements RequestBody {
 
     public Order(String orderRef, List<Instruction> instructions, Map<String, String> metadata, CustomerDefaults customerDefaults) {
         this.orderRef = orderRef;

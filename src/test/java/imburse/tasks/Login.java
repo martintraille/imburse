@@ -42,6 +42,12 @@ public class Login implements Task {
         return Instrumented.instanceOf(Login.class).newInstance();
     }
 
+
+    public static Performable withMandateNotEnabledTenantCredentials() {
+        final TestData testData = new TestData();
+        emailAddress = testData.getData(ACCOUNT_PORTAL_EMAIL_ADDRESS);
+        password = testData.getData(ACCOUNT_PORTAL_PASSWORD);
+
     public static Performable withAccountWithSingleTenantCredentials() {
         final TestData testData = new TestData();
 
@@ -67,6 +73,7 @@ public class Login implements Task {
         actor.attemptsTo(
                 Click.on(AccountLoginPage.SUBMIT_BUTTON));
     }
+
 
 
 }
