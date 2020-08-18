@@ -79,12 +79,6 @@ public class MandateStepDefinitions {
 
         //   testData.setData(OPS_PORTAL_URL, environmentVariables.getProperty("opsportalurl"));
         //TODO API call to verify if mandate is enabled is not yet implemented
-        //  String api = "/v2/mandatecheck";
-        //  SerenityRest.given().log().all();
-        //   .header("Authorization")
-        // .header("x-account-id", accountId)
-        // .header("x-tenant-id", tenantId)
-        // .header("Content-Type", "application/json")
         //.when()
         //.post(api).then().statusCode(Integer.parseInt(testData.getData(EXPECTED_STATUS_CODE).toString()));
         setBody(orderDirector.anOrderWithAnInstruction());
