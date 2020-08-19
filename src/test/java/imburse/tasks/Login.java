@@ -47,7 +47,9 @@ public class Login implements Task {
         final TestData testData = new TestData();
         emailAddress = testData.getData(ACCOUNT_PORTAL_EMAIL_ADDRESS);
         password = testData.getData(ACCOUNT_PORTAL_PASSWORD);
+        return Instrumented.instanceOf(Login.class).newInstance();
 
+    }
     public static Performable withAccountWithSingleTenantCredentials() {
         final TestData testData = new TestData();
 

@@ -1,6 +1,48 @@
-steps:
-  - run: "mvn clean verify -DENV=qa -Dwebdriver.driver=chrome"
-  - run:
-      command: |
-        echo "Arbitrary multi-line bash"
-        echo "Copy-paste from 'Execute Shell' in Jenkins"
+version: 2.1
+orbs:
+  docker: circleci/docker@1.0.1
+jobs:
+  pr_build:
+    docker:
+      - image: circleci/buildpack-deps
+    steps:
+      - setup_remote_docker
+      - checkout
+      - docker/build:
+            step-name: Build Base Docker Image
+            image: mvn-serenity-tests
+            dockerfile: ./docker/Dockerfile
+            tag: latest
+
+  master_build:
+    docker:
+      - image: circleci/buildpack-deps
+    steps:
+      - setup_remote_docker
+      - checkout
+      - run:
+            name: Docker login
+            command: |
+              echo ""
+              echo "Logging into Docker Registry: $DEV_DOCKER_REGISTRY"
+              docker login -u $DEV_DOCKER_REGISTRY_USER -p $DEV_DOCKER_REGISTRY_PASSWORD $DEV_DOCKER_REGISTRY
+      - docker/publish:
+          image: $DEV_DOCKER_REGISTRY/mvn-serenity-tests
+          dockerfile: ./docker/Dockerfile
+          tag: 'latest,${CIRCLE_SHA1:0:7}'
+workflows:
+  version: 2.1
+  pr_workflow:
+    jobs:
+      - pr_build:
+          filters:
+            branches:
+              ignore: master
+          context: Imburse_Global
+  master_workflow:
+    jobs:
+      - master_build:
+          filters:
+            branches:
+              only: master
+          context: Imburse_Global
