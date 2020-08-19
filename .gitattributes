@@ -1,0 +1,7 @@
+* text eol=CRLF
+.circleci/**/*.* text eol=LF
+.helm/**/*.* text eol=LF
+scripts/**/*.* text eol=LF
+docker/**/*.* text eol=LF
+**/*.sh text eol=LF
+**/*.ps1 text eol=CRLF
